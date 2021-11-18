@@ -1,7 +1,6 @@
 package com.three_squared.rhuarhri_induction.dependency_injection
 
 import android.content.Context
-import com.three_squared.rhuarhri_induction.DependencyBase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -14,11 +13,11 @@ import javax.inject.Singleton
 @InstallIn(SingletonComponent::class)
 class Dependencies {
 
-    @Singleton
+    /*@Singleton
     @Provides
     fun provideApplication(@ApplicationContext app : Context) : DependencyBase {
         return app as DependencyBase
-    }
+    }*/
 
     @Singleton
     @Provides
