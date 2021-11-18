@@ -1,10 +1,8 @@
 package com.three_squared.rhuarhri_induction.dependency_injection
 
-import android.content.Context
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
-import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import io.realm.RealmConfiguration
 import javax.inject.Singleton
