@@ -6,8 +6,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.navigation.fragment.findNavController
-import com.three_squared.rhuarhri_induction.R
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.three_squared.rhuarhri_induction.databinding.SearchScreenFragmentBinding
 
 class SearchScreenFragment : Fragment() {
@@ -33,9 +32,16 @@ class SearchScreenFragment : Fragment() {
 
         binding.viewmodel = viewModel
 
-        binding.button.setOnClickListener {
-            findNavController().navigate(R.id.action_searchScreenFragment_to_viewCommitScreenFragment)
+        binding.searchResultRV.setHasFixedSize(true)
+        binding.searchResultRV.adapter = SearchListAdapter(viewModel.searchListResult) { name ->
+            println(name)
         }
+
+        binding.searchResultRV.layoutManager = LinearLayoutManager(this.context)
+
+        /*binding.button.setOnClickListener {
+            findNavController().navigate(R.id.action_searchScreenFragment_to_viewCommitScreenFragment)
+        }*/
     }
 
 }

@@ -20,27 +20,42 @@
                 android:id="@+id/repoSearchBarView"
                 android:layout_width="0dp"
                 android:layout_height="50dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/titleTXT" />
+
+            <TextView
+                android:id="@+id/titleTXT"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:text="@string/search_screen_title"
+                android:textColor="#000000"
+                android:textSize="42sp"
+                android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
-                android:id="@+id/textView"
+                android:id="@+id/refreshedTXT"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="180dp"
-                android:text="@{viewmodel.testMessage}"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
+                android:text="@{viewmodel.refreshed}"
+                app:layout_constraintStart_toStartOf="@+id/repoSearchBarView"
                 app:layout_constraintTop_toBottomOf="@+id/repoSearchBarView" />
 
-            <Button
-                android:id="@+id/button"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Next"
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/searchResultRV"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textView" />
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/refreshedTXT" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </FrameLayout>
