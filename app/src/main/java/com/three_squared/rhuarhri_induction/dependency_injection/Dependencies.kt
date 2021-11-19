@@ -17,7 +17,6 @@ class Dependencies {
     @Singleton
     @Provides
     fun provideApplication(@ApplicationContext app : Context) : DependencyBase {
-
         return app as DependencyBase
     }
 

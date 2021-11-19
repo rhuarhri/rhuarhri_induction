@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/searchScreenFragment">
+
+    <fragment
+        android:id="@+id/searchScreenFragment"
+        android:name="com.three_squared.rhuarhri_induction.search_screen.SearchScreenFragment"
+        android:label="search_screen_fragment"
+        tools:layout="@layout/search_screen_fragment" >
+        <action
+            android:id="@+id/action_searchScreenFragment_to_viewCommitScreenFragment"
+            app:destination="@id/viewCommitScreenFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/viewCommitScreenFragment"
+        android:name="com.three_squared.rhuarhri_induction.view_commit_screen.ViewCommitScreenFragment"
+        android:label="view_commit_screen_fragment"
+        tools:layout="@layout/view_commit_screen_fragment" >
+        <action
+            android:id="@+id/action_viewCommitScreenFragment_to_userScreenFragment"
+            app:destination="@id/userScreenFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/userScreenFragment"
+        android:name="com.three_squared.rhuarhri_induction.user_screen.UserScreenFragment"
+        android:label="user_screen_fragment"
+        tools:layout="@layout/user_screen_fragment" >
+        <action
+            android:id="@+id/action_userScreenFragment_to_viewCommitScreenFragment"
+            app:destination="@id/viewCommitScreenFragment" />
+    </fragment>
+</navigation>

@@ -45,6 +45,9 @@ ext {
     constraint_layout_version = "2.1.2"
     nav_version = "2.3.5"
 
+    livedata = "2.4.0"
+    viewmodel = "2.4.0"
+
     moshi_version = "1.8.0"
     retrofit_version = "2.9.0"
 
@@ -68,6 +71,10 @@ dependencies {
     implementation "androidx.navigation:navigation-ui-ktx:$nav_version"
     implementation "androidx.navigation:navigation-dynamic-features-fragment:$nav_version"
     androidTestImplementation "androidx.navigation:navigation-testing:$nav_version"
+
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
+    implementation "androidx.lifecycle:lifecycle-livedata-ktx:$livedata"
+    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$viewmodel"
 
     //moshi
     implementation "com.squareup.moshi:moshi:$moshi_version"
