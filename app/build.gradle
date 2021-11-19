@@ -53,7 +53,7 @@ ext {
     livedata = "2.4.0"
     viewmodel = "2.4.0"
 
-    moshi_version = "1.8.0"
+    //moshi_version = "1.8.0"
     retrofit_version = "2.9.0"
 
     hilt_version = "2.38.1"
@@ -82,11 +82,12 @@ dependencies {
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$viewmodel"
 
     //moshi
-    implementation "com.squareup.moshi:moshi:$moshi_version"
-    kapt "com.squareup.moshi:moshi-kotlin-codegen:$moshi_version"
+    //implementation "com.squareup.moshi:moshi:$moshi_version"
+    //kapt "com.squareup.moshi:moshi-kotlin-codegen:$moshi_version"
 
     // retro fit
     implementation "com.squareup.retrofit2:retrofit:$retrofit_version"
+    implementation "com.squareup.retrofit2:converter-moshi:$retrofit_version"
 
     // hilt
     implementation "com.google.dagger:hilt-android:$hilt_version"

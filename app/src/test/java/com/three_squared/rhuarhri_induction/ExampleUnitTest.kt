@@ -12,6 +12,7 @@ import org.junit.Assert.*
 class ExampleUnitTest {
     @Test
     fun addition_isCorrect() {
+        //throw UnsupportedOperationException("Not jet implemented")
         assertEquals("failing test",4, 2 + 2)
     }
 }

@@ -39,6 +39,10 @@ class SearchScreenFragment : Fragment() {
 
         binding.searchResultRV.layoutManager = LinearLayoutManager(this.context)
 
+        binding.button.setOnClickListener {
+            viewModel.searchGithub()
+        }
+
         /*binding.button.setOnClickListener {
             findNavController().navigate(R.id.action_searchScreenFragment_to_viewCommitScreenFragment)
         }*/
