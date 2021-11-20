@@ -32,6 +32,8 @@ class SearchScreenFragment : Fragment() {
 
         binding.viewmodel = viewModel
 
+        /*
+        recycler view set up
         binding.searchResultRV.setHasFixedSize(true)
         binding.searchResultRV.adapter = SearchListAdapter(viewModel.searchListResult) { name ->
             println(name)
@@ -41,7 +43,7 @@ class SearchScreenFragment : Fragment() {
 
         binding.button.setOnClickListener {
             viewModel.searchGithub()
-        }
+        }*/
 
         /*binding.button.setOnClickListener {
             findNavController().navigate(R.id.action_searchScreenFragment_to_viewCommitScreenFragment)
