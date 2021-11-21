@@ -1,4 +1,10 @@
 <resources>
     <string name="app_name">Rhuarhri Induction</string>
     <string name="search_screen_title">Search</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="search_fragment_search_input_hint">User name</string>
+    <string name="search_fragment_found_title">Found</string>
+    <string name="search_fragment_user_image_description">User image</string>
+    <string name="repo_list_fragment_title">Repositories</string>
 </resources>

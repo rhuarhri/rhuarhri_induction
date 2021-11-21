@@ -20,7 +20,7 @@ class SearchListAdapter(private val items : List<String>, private val itemClicke
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.commit_item_layout, parent, false)
+        val view = LayoutInflater.from(parent.context).inflate(R.layout.repositiory_item_layout, parent, false)
         return ItemViewHolder(view)
     }
 

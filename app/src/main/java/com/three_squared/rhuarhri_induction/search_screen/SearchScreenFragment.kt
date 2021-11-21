@@ -6,8 +6,11 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.FragmentManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.three_squared.rhuarhri_induction.databinding.SearchScreenFragmentBinding
+import com.three_squared.rhuarhri_induction.search_screen.search_screen_child_fragments.RepoListFragment
+import com.three_squared.rhuarhri_induction.search_screen.search_screen_child_fragments.SearchFragment
 
 class SearchScreenFragment : Fragment() {
 
@@ -21,6 +24,18 @@ class SearchScreenFragment : Fragment() {
     ): View {
 
         binding = SearchScreenFragmentBinding.inflate(inflater, container, false)
+
+        val searchFragment = SearchFragment()
+        val repoListFragment = RepoListFragment()
+
+        val fragmentManger : FragmentManager = this.childFragmentManager
+
+        fragmentManger.beginTransaction().apply {
+            replace(binding.SearchFragmentLocation.id, searchFragment)
+            replace(binding.RepoInfoLocation.id, repoListFragment)
+            commit()
+        }
+
         return binding.root
 
         //return inflater.inflate(R.layout.search_screen_fragment, container, false)
