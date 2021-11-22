@@ -7,12 +7,16 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.FragmentManager
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.ViewModel
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.three_squared.rhuarhri_induction.databinding.SearchScreenFragmentBinding
 import com.three_squared.rhuarhri_induction.search_screen.search_screen_child_fragments.RepoListFragment
 import com.three_squared.rhuarhri_induction.search_screen.search_screen_child_fragments.RepositoryParcelable
 import com.three_squared.rhuarhri_induction.search_screen.search_screen_child_fragments.SearchFragment
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class SearchScreenFragment : Fragment() {
 
 
@@ -50,7 +54,9 @@ class SearchScreenFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProvider(this).get(SearchScreenViewModel::class.java)
+        val newViewModel : SearchScreenViewModel by viewModels()//ViewModelProvider(this).get(SearchScreenViewModel::class.java)
+
+        viewModel = newViewModel
 
         binding.viewmodel = viewModel
 
@@ -74,6 +80,7 @@ class SearchScreenFragment : Fragment() {
 
     public fun onSearch(name : String) {
         println("search for user with name of $name")
+        viewModel.searchForUser(name)
     }
 
     public fun onItemClicked(id : String, name : String) {

@@ -33,11 +33,11 @@ class RetroFitHandler {
 
 
     suspend fun getUserInfo() {
-        val retrofit = Retrofit.Builder().addConverterFactory(MoshiConverterFactory.create())
+        val retrofit : Retrofit = Retrofit.Builder().addConverterFactory(MoshiConverterFactory.create())
             .baseUrl("https://api.github.com/").build()
 
         val retrofitInterface = retrofit.create(RetroFitInterface::class.java)
-        val response =  retrofitInterface.getUser().awaitResponse()
+        val response =  retrofitInterface.getUser("").awaitResponse()
 
         if (response.isSuccessful) {
             println("Success")
@@ -49,17 +49,18 @@ class RetroFitHandler {
 
 }
 
+/*
 data class User(
     @field:Json(name = "id") val id : String?,
     @field:Json(name = "repos_url") val repoListURL : String?,
     @field:Json(name = "login") val name : String?,
     @field:Json(name = "avatar_url") val avatar : String?,
     @field:Json(name = "public_repos") val repos : Int?
-)
+)*/
 
-interface RetroFitInterface {
+/*interface RetroFitInterface {
 
     @GET("users/rhuarhri")
     fun getUser(): Call<User>
 
-}
+}*/
