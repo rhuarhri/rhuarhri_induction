@@ -10,6 +10,7 @@ import androidx.fragment.app.FragmentManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.three_squared.rhuarhri_induction.databinding.SearchScreenFragmentBinding
 import com.three_squared.rhuarhri_induction.search_screen.search_screen_child_fragments.RepoListFragment
+import com.three_squared.rhuarhri_induction.search_screen.search_screen_child_fragments.RepositoryParcelable
 import com.three_squared.rhuarhri_induction.search_screen.search_screen_child_fragments.SearchFragment
 
 class SearchScreenFragment : Fragment() {
@@ -25,8 +26,14 @@ class SearchScreenFragment : Fragment() {
 
         binding = SearchScreenFragmentBinding.inflate(inflater, container, false)
 
-        val searchFragment = SearchFragment()
-        val repoListFragment = RepoListFragment()
+        val searchFragment = SearchFragment.newInstance("Rhuarhri Cordon")
+
+        val parcelableRepoList : ArrayList<RepositoryParcelable> = arrayListOf<RepositoryParcelable>(
+            RepositoryParcelable(id = "1", name = "Project 1", visibility = "Public", description = "Test"),
+            RepositoryParcelable(id = "2", name = "Project 2", visibility = "Public", description = "Test")
+        )
+
+        val repoListFragment = RepoListFragment.newInstance(parcelableRepoList)
 
         val fragmentManger : FragmentManager = this.childFragmentManager
 
@@ -63,6 +70,15 @@ class SearchScreenFragment : Fragment() {
         /*binding.button.setOnClickListener {
             findNavController().navigate(R.id.action_searchScreenFragment_to_viewCommitScreenFragment)
         }*/
+    }
+
+    public fun onSearch(name : String) {
+        println("search for user with name of $name")
+    }
+
+    public fun onItemClicked(id : String, name : String) {
+        println("repo item name is $name")
+        println("repo item id is $id")
     }
 
 }

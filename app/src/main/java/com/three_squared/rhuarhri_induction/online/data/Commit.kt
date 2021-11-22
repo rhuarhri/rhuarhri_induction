@@ -3,14 +3,14 @@ package com.three_squared.rhuarhri_induction.online.data
 import com.squareup.moshi.Json
 
 data class CommitInfo(
-    @field:Json(name = "sha") var id : String?,
-    @field:Json(name = "commit") var commit : Commit?,
-    @field:Json(name = "author") var author : User?,
-    @field:Json(name = "committer") var committer : User?
+    @field:Json(name = "sha") val id : String?,
+    @field:Json(name = "commit") val commit : Commit?,
+    @field:Json(name = "author") val author : User?,
+    @field:Json(name = "committer") val committer : User?
 )
 
 data class Commit(
-    @field:Json(name = "message") var message : String?,
+    @field:Json(name = "message") val message : String?,
 )
 
 

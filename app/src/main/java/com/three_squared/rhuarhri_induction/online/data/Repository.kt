@@ -3,14 +3,14 @@ package com.three_squared.rhuarhri_induction.online.data
 import com.squareup.moshi.Json
 
 data class Repository(
-    @field:Json(name = "id") var id : Int?,
-    @field:Json(name = "name") var name : String?,
-    @field:Json(name = "visibility") var visibility : Boolean?,
-    @field:Json(name = "owner") var owner : User?,
-    @field:Json(name = "description") var description : String?,
-    @field:Json(name = "contributors_url") var contributors : String?,
-    @field:Json(name = "created_at") var created : String?,
-    @field:Json(name = "updated_at") var updated : String?, )
+    @field:Json(name = "id") val id : Int?,
+    @field:Json(name = "name") val name : String?,
+    @field:Json(name = "visibility") val visibility : String?,
+    @field:Json(name = "owner") val owner : User?,
+    @field:Json(name = "description") val description : String?,
+    @field:Json(name = "contributors_url") val contributors : String?,
+    @field:Json(name = "created_at") val created : String?,
+    @field:Json(name = "updated_at") val updated : String?, )
 
 /*
 branches url  example https://api.github.com/repos/rhuarhri/carbonCleanUp/branches

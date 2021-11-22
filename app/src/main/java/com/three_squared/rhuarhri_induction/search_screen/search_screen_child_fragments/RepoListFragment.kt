@@ -6,35 +6,21 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.three_squared.rhuarhri_induction.data.Repository
 import com.three_squared.rhuarhri_induction.databinding.FragmentRepoListBinding
 import com.three_squared.rhuarhri_induction.search_screen.SearchListAdapter
+import com.three_squared.rhuarhri_induction.search_screen.SearchScreenFragment
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-//private const val ARG_PARAM1 = "param1"
-//private const val ARG_PARAM2 = "param2"
-
-/**
- * A simple [Fragment] subclass.
- * Use the [RepoListFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
-class RepoListFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    //private var param1: String? = null
-    //private var param2: String? = null
+class RepoListFragment() : Fragment() {
 
     private lateinit var binding: FragmentRepoListBinding
+    private var repoList : ArrayList<RepositoryParcelable>? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        /*arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }*/
-
-
-
+        arguments?.let {
+            repoList = it.getParcelableArrayList<RepositoryParcelable>(RepoListFragment.searchResultKey)
+        }
     }
 
     override fun onCreateView(
@@ -53,31 +39,37 @@ class RepoListFragment : Fragment() {
         super.onActivityCreated(savedInstanceState)
         //recycler view set up
         binding.searchResultRV.setHasFixedSize(true)
-        binding.searchResultRV.adapter = SearchListAdapter(listOf("test 1", "test 2", "test 3")) { name ->
-            println(name)
+
+        val displayedRepoList : MutableList<Repository> = mutableListOf()
+        repoList?.forEach { parcelableRepo ->
+            if (parcelableRepo.id != null && parcelableRepo.name != null
+                && parcelableRepo.visibility != null && parcelableRepo.description != null) {
+                val foundRepository = Repository(parcelableRepo.id, parcelableRepo.name,
+                parcelableRepo.visibility, parcelableRepo.description)
+                displayedRepoList.add(foundRepository)
+            }
+        }
+
+        binding.searchResultRV.adapter = SearchListAdapter(displayedRepoList) { id, name ->
+            (parentFragment as SearchScreenFragment?)?.onItemClicked(id, name)
         }
 
         binding.searchResultRV.layoutManager = LinearLayoutManager(this.context)
 
     }
 
-    /*companion object {
-        *//**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment RepoListFragment.
-         *//*
-        // TODO: Rename and change types and number of parameters
+    companion object {
+        const val searchResultKey : String = "Result"
+
         @JvmStatic
-        fun newInstance(param1: String, param2: String) =
+        fun newInstance(repoList : ArrayList<RepositoryParcelable>) =
             RepoListFragment().apply {
                 arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
+                    putParcelableArrayList(searchResultKey, repoList)
+                    //putString(ARG_PARAM1, param1)
+                    //putString(ARG_PARAM2, param2)
+
                 }
             }
-    }*/
+    }
 }
