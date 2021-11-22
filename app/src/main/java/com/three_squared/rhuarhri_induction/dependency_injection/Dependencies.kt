@@ -2,8 +2,11 @@ package com.three_squared.rhuarhri_induction.dependency_injection
 
 import android.content.Context
 import com.three_squared.rhuarhri_induction.DependencyBase
+import com.three_squared.rhuarhri_induction.online.ConnectionChecker
 import com.three_squared.rhuarhri_induction.online.QueryHandler
 import com.three_squared.rhuarhri_induction.search_screen.SearchScreenRepository
+import com.three_squared.rhuarhri_induction.storage.Cache
+import com.three_squared.rhuarhri_induction.storage.RealmHandler
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -33,14 +36,32 @@ class Dependencies {
 
     @Singleton
     @Provides
+    fun provideConnectionChecker(@ApplicationContext app : Context) : ConnectionChecker {
+        return ConnectionChecker(app)
+    }
+
+    @Singleton
+    @Provides
     fun provideQueryHandler() : QueryHandler {
         return QueryHandler(provideRetroFit())
     }
 
     @Singleton
     @Provides
-    fun provideSearchScreenRepository() : SearchScreenRepository {
-        return SearchScreenRepository(provideQueryHandler())
+    fun provideRealmHandler() : RealmHandler {
+        return RealmHandler(providesRealmConfig())
+    }
+
+    @Singleton
+    @Provides
+    fun provideCache() : Cache {
+        return Cache(provideRealmHandler())
+    }
+
+    @Singleton
+    @Provides
+    fun provideSearchScreenRepository(@ApplicationContext app : Context) : SearchScreenRepository {
+        return SearchScreenRepository(provideQueryHandler(), provideCache(), provideConnectionChecker(app))
     }
 
     @Singleton

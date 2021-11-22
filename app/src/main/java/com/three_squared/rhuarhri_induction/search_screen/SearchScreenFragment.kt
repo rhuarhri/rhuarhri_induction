@@ -113,8 +113,10 @@ class SearchScreenFragment : Fragment() {
     }*/
 
     fun onSearch(name : String) {
-        println("search for user with name of $name")
-        viewModel.searchForUser(name)
+        //println("search for user with name of $name")
+        //viewModel.searchForUser(name)
+        //viewModel.databaseTest()
+        viewModel.checkConnection()
     }
 
     fun onItemClicked(id : String, name : String) {

@@ -14,13 +14,6 @@ import javax.inject.Inject
 @HiltViewModel
 class SearchScreenViewModel @Inject constructor(private val searchScreenRepository: SearchScreenRepository): ViewModel() {
 
-    //val refreshed = "refreshed 00:00:00"
-
-    //val searchListResult : List<String> = listOf("test 1", "test 2", "test 3", "test 4")
-
-    //val foundUser = searchScreenRepository.userInfo
-    //val foundRepositoryList = searchScreenRepository.repositoryList
-
     val userInfo : MutableLiveData<User> by lazy {
         MutableLiveData<User>(User("", "", "", ""))
     }
@@ -36,6 +29,23 @@ class SearchScreenViewModel @Inject constructor(private val searchScreenReposito
             withContext(Dispatchers.Main) {
                 userInfo.value = foundUser
             }
+        }
+    }
+
+    fun databaseTest() {
+        viewModelScope.launch(Dispatchers.IO) {
+            val user = User("1", "repoUrl", "Jack", "avatarUrl")
+
+            searchScreenRepository.addUserToCache(user)
+
+            val foundUser = searchScreenRepository.getUserFromCache("1")
+            println("found user name is ${foundUser.name}")
+        }
+    }
+
+    fun checkConnection() {
+        viewModelScope.launch(Dispatchers.IO) {
+            searchScreenRepository.checkConnection()
         }
     }
 
