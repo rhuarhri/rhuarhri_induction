@@ -45,13 +45,13 @@ class SearchScreenFragment : Fragment() {
         val userInfoObserver = Observer<User> { user ->
             setupSearchFragment(user.name, user.avatar)
         }
-        viewModel.userInfo.observe(this, userInfoObserver)
+        viewModel.userInfo.observe(viewLifecycleOwner, userInfoObserver)
 
         val repoListObserver = Observer<List<Repository>> { repoList ->
             //setupRepoList(repoList)
         }
 
-        viewModel.repositoryList.observe(this, repoListObserver)
+        viewModel.repositoryList.observe(viewLifecycleOwner, repoListObserver)
 
         return binding.root
 
@@ -116,7 +116,7 @@ class SearchScreenFragment : Fragment() {
         //println("search for user with name of $name")
         //viewModel.searchForUser(name)
         //viewModel.databaseTest()
-        viewModel.checkConnection()
+        //viewModel.checkConnection()
     }
 
     fun onItemClicked(id : String, name : String) {
