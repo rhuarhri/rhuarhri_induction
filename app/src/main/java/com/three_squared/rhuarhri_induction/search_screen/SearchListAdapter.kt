@@ -11,8 +11,8 @@ import com.three_squared.rhuarhri_induction.data.Repository
 class SearchListAdapter(private val items : List<Repository>, private val itemClicked : (id : String, name : String) -> Unit) : RecyclerView.Adapter<SearchListAdapter.ItemViewHolder>() {
 
     class ItemViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val titleTXT = itemView.findViewById<TextView>(R.id.itemTitleTXT)
-        val visibilityTXT = itemView.findViewById<TextView>(R.id.repoTypeTXT)
+        val titleTXT : TextView = itemView.findViewById(R.id.itemTitleTXT)
+        val visibilityTXT : TextView = itemView.findViewById(R.id.repoTypeTXT)
 
         /*fun bind(clickListener: () -> Unit) {
             itemView.setOnClickListener {

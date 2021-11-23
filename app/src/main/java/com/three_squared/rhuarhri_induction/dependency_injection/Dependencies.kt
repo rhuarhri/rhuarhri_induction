@@ -5,8 +5,7 @@ import com.three_squared.rhuarhri_induction.DependencyBase
 import com.three_squared.rhuarhri_induction.online.ConnectionChecker
 import com.three_squared.rhuarhri_induction.online.QueryHandler
 import com.three_squared.rhuarhri_induction.search_screen.SearchScreenRepository
-import com.three_squared.rhuarhri_induction.storage.Cache
-import com.three_squared.rhuarhri_induction.storage.RealmHandler
+import com.three_squared.rhuarhri_induction.storage.*
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -48,20 +47,26 @@ class Dependencies {
 
     @Singleton
     @Provides
-    fun provideRealmHandler() : RealmHandler {
-        return RealmHandler(providesRealmConfig())
+    fun provideUserCache() : UserCache {
+        return UserCache(providesRealmConfig())
     }
 
     @Singleton
     @Provides
-    fun provideCache() : Cache {
-        return Cache(provideRealmHandler())
+    fun provideRepositoryCache() : RepositoryCache {
+        return RepositoryCache(providesRealmConfig())
+    }
+
+    @Singleton
+    @Provides
+    fun provideCommitCache() : CommitCache {
+        return CommitCache(providesRealmConfig())
     }
 
     @Singleton
     @Provides
     fun provideSearchScreenRepository(@ApplicationContext app : Context) : SearchScreenRepository {
-        return SearchScreenRepository(provideQueryHandler(), provideCache(), provideConnectionChecker(app))
+        return SearchScreenRepository(provideQueryHandler(), provideConnectionChecker(app))
     }
 
     @Singleton

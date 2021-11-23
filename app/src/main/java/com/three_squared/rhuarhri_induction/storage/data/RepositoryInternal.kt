@@ -5,15 +5,15 @@ import io.realm.annotations.PrimaryKey
 import io.realm.annotations.Required
 import org.bson.types.ObjectId
 
-open class UserInternal (
+open class RepositoryInternal (
     @PrimaryKey
-    var primaryKey : String = ObjectId().toHexString(), //TODO remove primary key
+    var privateKey : String = ObjectId().toHexString(),//TODO remove primary key
     @Required
     var id : String = "",
     @Required
     var name : String = "",
     @Required
-    var avatarUrl : String = "",
+    var visibility : String = "",
     @Required
-    var repositoryUrl : String = ""
+    var description : String = ""
 ) : RealmObject()

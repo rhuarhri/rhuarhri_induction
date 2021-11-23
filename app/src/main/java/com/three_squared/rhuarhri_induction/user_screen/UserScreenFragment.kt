@@ -6,10 +6,8 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.navigation.Navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import com.three_squared.rhuarhri_induction.R
-import com.three_squared.rhuarhri_induction.databinding.SearchScreenFragmentBinding
 import com.three_squared.rhuarhri_induction.databinding.UserScreenFragmentBinding
 
 class UserScreenFragment : Fragment() {

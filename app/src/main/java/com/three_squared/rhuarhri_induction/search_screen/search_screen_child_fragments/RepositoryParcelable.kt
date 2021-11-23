@@ -12,8 +12,7 @@ class RepositoryParcelable(val id : String?, val name : String?,
 
 
     constructor(parcel: Parcel) : this(parcel.readString(), parcel.readString(),
-        parcel.readString(), parcel.readString()) {
-    }
+        parcel.readString(), parcel.readString())
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
         parcel.writeString(this.id)

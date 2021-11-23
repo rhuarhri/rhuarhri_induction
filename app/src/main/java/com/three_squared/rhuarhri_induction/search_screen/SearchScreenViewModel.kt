@@ -19,7 +19,7 @@ class SearchScreenViewModel @Inject constructor(private val searchScreenReposito
     }
 
     val repositoryList : MutableLiveData<List<Repository>> by lazy {
-        MutableLiveData<List<Repository>>(listOf<Repository>())
+        MutableLiveData<List<Repository>>(listOf())
     }
 
     fun searchForUser(userName : String) {
@@ -29,23 +29,6 @@ class SearchScreenViewModel @Inject constructor(private val searchScreenReposito
             withContext(Dispatchers.Main) {
                 userInfo.value = foundUser
             }
-        }
-    }
-
-    fun databaseTest() {
-        viewModelScope.launch(Dispatchers.IO) {
-            val user = User("1", "repoUrl", "Jack", "avatarUrl")
-
-            searchScreenRepository.addUserToCache(user)
-
-            val foundUser = searchScreenRepository.getUserFromCache("1")
-            println("found user name is ${foundUser.name}")
-        }
-    }
-
-    fun checkConnection() {
-        viewModelScope.launch(Dispatchers.IO) {
-            searchScreenRepository.checkConnection()
         }
     }
 

@@ -10,7 +10,7 @@ class QueryHandler @Inject constructor(private val retroFit : Retrofit) {
     suspend fun getUser(name : String) : UserOnline? {
         val retrofitInterface = retroFit.create(RetroFitInterface::class.java)
 
-        println("Input name is ${name}")
+        println("Input name is $name")
 
         return try {
             val response = retrofitInterface.getUser(name).awaitResponse()
@@ -23,7 +23,7 @@ class QueryHandler @Inject constructor(private val retroFit : Retrofit) {
                 null
             }
         } catch (e : Exception) {
-            println("error was ${e.toString()}")
+            println("error was ${e}")
             null
         }
     }

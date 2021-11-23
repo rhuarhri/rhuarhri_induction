@@ -2,8 +2,6 @@ package com.three_squared.rhuarhri_induction
 
 import org.junit.Test
 
-import org.junit.Assert.*
-
 /**
  * Example local unit test, which will execute on the development machine (host).
  *
@@ -13,6 +11,6 @@ class ExampleUnitTest {
     @Test
     fun addition_isCorrect() {
         //throw UnsupportedOperationException("Not jet implemented")
-        assertEquals("failing test",4, 2 + 2)
+        //assertEquals("failing test",4, 2 + 2)
     }
 }

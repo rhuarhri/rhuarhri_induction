@@ -1,19 +1,17 @@
 package com.three_squared.rhuarhri_induction.online
 
-import com.squareup.moshi.Json
-import retrofit2.Call
-import retrofit2.Retrofit
+
+/*import retrofit2.Retrofit
 import retrofit2.awaitResponse
 import retrofit2.converter.moshi.MoshiConverterFactory
-import retrofit2.http.GET
 
 
-/*
+*//*
 This class is used to handle the interactions with retrofit
- */
+ *//*
 class RetroFitHandler {
 
-    /*
+    *//*
     useful urls
     getting only user information
     https://api.github.com/users/rhuarhri
@@ -29,7 +27,7 @@ class RetroFitHandler {
 
     getting user image
     https://avatars.githubusercontent.com/u/26746052?v=4
-     */
+     *//*
 
 
     suspend fun getUserInfo() {
@@ -47,7 +45,7 @@ class RetroFitHandler {
         }
     }
 
-}
+}*/
 
 /*
 data class User(

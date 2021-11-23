@@ -4,12 +4,10 @@ import com.three_squared.rhuarhri_induction.data.User
 import com.three_squared.rhuarhri_induction.online.ConnectionChecker
 import com.three_squared.rhuarhri_induction.online.QueryHandler
 import com.three_squared.rhuarhri_induction.online.data.UserOnline
-import com.three_squared.rhuarhri_induction.storage.Cache
 import javax.inject.Inject
 
 class SearchScreenRepository @Inject constructor(
     private val onlineQueryHandler: QueryHandler,
-    private val cache : Cache,
     private val connectionChecker: ConnectionChecker
 ) {
 
@@ -27,7 +25,7 @@ class SearchScreenRepository @Inject constructor(
         }
     }
 
-    suspend fun getUserFromCache(userId : String) : User {
+    /*suspend fun getUserFromCache(userId : String) : User {
         val foundUsers = cache.getUser(userId)
 
         return if (foundUsers.isNotEmpty()) {
@@ -48,6 +46,6 @@ class SearchScreenRepository @Inject constructor(
     }
 
     suspend fun addUserToCache(user : User) {
-        cache.addUser(user)
-    }
+
+    }*/
 }

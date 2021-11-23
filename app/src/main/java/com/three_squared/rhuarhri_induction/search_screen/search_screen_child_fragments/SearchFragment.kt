@@ -16,7 +16,7 @@ class SearchFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
-            name = it.getString(SearchFragment.nameKey)
+            name = it.getString(nameKey)
         }
     }
 

@@ -37,7 +37,7 @@ class SearchScreenFragment : Fragment() {
         binding.viewmodel = viewModel
 
         setupSearchFragment("", "")
-        setupRepoList(listOf<Repository>(
+        setupRepoList(listOf(
             Repository("1", "Project 1", "Private", "test"),
             Repository("2", "Project 2", "Public", "test")
         ))

@@ -11,7 +11,7 @@ import com.three_squared.rhuarhri_induction.databinding.FragmentRepoListBinding
 import com.three_squared.rhuarhri_induction.search_screen.SearchListAdapter
 import com.three_squared.rhuarhri_induction.search_screen.SearchScreenFragment
 
-class RepoListFragment() : Fragment() {
+class RepoListFragment : Fragment() {
 
     private lateinit var binding: FragmentRepoListBinding
     private var repoList : ArrayList<RepositoryParcelable>? = null
@@ -19,7 +19,7 @@ class RepoListFragment() : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
-            repoList = it.getParcelableArrayList<RepositoryParcelable>(RepoListFragment.searchResultKey)
+            repoList = it.getParcelableArrayList(searchResultKey)
         }
     }
 
