@@ -8,7 +8,7 @@ import org.bson.types.ObjectId
 
 open class RepositoryInternal (
     @PrimaryKey
-    var privateKey : String = ObjectId().toHexString(),//TODO remove primary key
+    //var privateKey : String = ObjectId().toHexString(),//TODO remove primary key
     @Required
     var id : String = "",
     @Required

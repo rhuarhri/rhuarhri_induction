@@ -10,7 +10,7 @@ import io.realm.RealmList
 import io.realm.kotlin.executeTransactionAwait
 import javax.inject.Inject
 
-class UserCache @Inject constructor(realmConfig : RealmConfiguration) : CacheParent<User>(realmConfig) {
+class UserCache @Inject constructor(private val realmConfig : RealmConfiguration) : CacheParent<User>(realmConfig) {
 
     suspend fun add(user: User) {
 
@@ -35,11 +35,22 @@ class UserCache @Inject constructor(realmConfig : RealmConfiguration) : CachePar
         }
 
         if (foundUser != null) {
-            updateInternalUser(user.id, userInternal)
+            updateInternalUser(user.id, user)
         }
     }
 
-    private suspend fun updateInternalUser(id : String, newUserInternal : UserInternal) {
+    private suspend fun updateInternalUser(id : String, user : User) {
+
+        val internalRepositories = RealmList<RepositoryInternal>()
+        //val repoCache = RepositoryCache(realmConfig)
+
+        for (repo in user.repositoryList) {
+            //repoCache.add(repo)
+            internalRepositories.add(
+                RepositoryInternal(repo.id, repo.name, repo.visibility, repo.description)
+            )
+        }
+
         val realm = super.getInstance()
         realm.executeTransactionAwait { transaction ->
 
@@ -48,10 +59,17 @@ class UserCache @Inject constructor(realmConfig : RealmConfiguration) : CachePar
                 .findFirst()
 
             if (foundUser != null) {
-                foundUser.name = newUserInternal.name
-                foundUser.avatarUrl = newUserInternal.avatarUrl
-                foundUser.repositoryUrl = newUserInternal.repositoryUrl
-                foundUser.repositories = newUserInternal.repositories
+                foundUser.name = user.name
+                foundUser.avatarUrl = user.avatar
+                foundUser.repositoryUrl = user.repoListURL
+
+                foundUser.repositories.clear()
+                for (newRepos in internalRepositories) {
+                    foundUser.repositories.add(newRepos)
+                }
+
+                //foundUser.repositories =
+                //transaction.copyToRealmOrUpdate(internalRepositories)
             }
         }
     }

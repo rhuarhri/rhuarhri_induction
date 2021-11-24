@@ -6,6 +6,7 @@ import com.three_squared.rhuarhri_induction.data.Commit
 import com.three_squared.rhuarhri_induction.data.Repository
 import com.three_squared.rhuarhri_induction.data.User
 import com.three_squared.rhuarhri_induction.storage.CacheParent
+import com.three_squared.rhuarhri_induction.storage.RepositoryCache
 import com.three_squared.rhuarhri_induction.storage.UserCache
 import com.three_squared.rhuarhri_induction.storage.data.CacheHistory
 import io.realm.Realm
@@ -127,11 +128,6 @@ class RealmTests {
     }
 
     @Test
-    fun addRepositoryToUser() {
-
-    }
-
-    @Test
     fun updateUser() = runBlocking {
         //this check if the up to date information of the user
         //replaces the existing information stored in the database
@@ -143,18 +139,51 @@ class RealmTests {
         userCache.add(existingUser)
 
         val newName = "Jack"
-        val newUpdatedUser = User(existingUser.id, existingUser.repoListURL,
-            newName, existingUser.avatar, existingUser.repositoryList)
+        val newRepoURL = "repoURL1"
+        val newAvatar = "avatar1"
+        val newRepoList = listOf(
+            Repository("1", "project 1", "public", "description")
+        )
+        val newUpdatedUser = User(existingUser.id, newRepoURL,
+            newName, newAvatar, newRepoList)
 
         userCache.add(newUpdatedUser)
 
         val foundUser = userCache.get(existingUser.id)
 
+        //they are all related to the same test so that is why these asserts are here
         assertNotEquals("check has result", null, foundUser)
         assertEquals("check name change", newName, foundUser!!.name)
+        assertEquals("check repoURL change", newRepoURL, foundUser.repoListURL)
+        assertEquals("check avatar change", newAvatar, foundUser.avatar)
+        assertEquals("check repo list not empty", false, foundUser.repositoryList.isEmpty())
     }
 
     //end of user cache tests
+
+    @Test
+    fun updateRepositoryTest() = runBlocking {
+        val repoCache = RepositoryCache(testConfig!!)
+
+        val existingRepository = dummyRepositoryData.first()
+
+        repoCache.add(existingRepository)
+
+        val newName = "repo 2"
+        val newDescription = "description 2"
+        val newVisibility = "Private"
+
+        val newRepository = Repository(existingRepository.id, newName, newVisibility, newDescription)
+
+        repoCache.add(newRepository)
+
+        val foundRepository = repoCache.getById(existingRepository.id)
+
+        assertNotEquals("check is result exists", null, foundRepository)
+        assertEquals("check name change", newName, foundRepository!!.name)
+        assertEquals("check visibility change", newVisibility, foundRepository.visibility)
+        assertEquals("check description changed", newDescription, foundRepository.description)
+    }
 
     @Test
     fun getRepositoriesTest() = runBlocking {
