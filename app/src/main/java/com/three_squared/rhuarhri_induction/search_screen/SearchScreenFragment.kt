@@ -49,6 +49,13 @@ class SearchScreenFragment : Fragment() {
 
         val repoListObserver = Observer<List<Repository>> { repoList ->
             //setupRepoList(repoList)
+            if (repoList.isNotEmpty()) {
+                for (repo in repoList) {
+                    println("found repo name is ${repo.name}")
+                }
+            } else {
+                println("repo list is empty")
+            }
         }
 
         viewModel.repositoryList.observe(viewLifecycleOwner, repoListObserver)
@@ -113,10 +120,8 @@ class SearchScreenFragment : Fragment() {
     }*/
 
     fun onSearch(name : String) {
-        //println("search for user with name of $name")
-        //viewModel.searchForUser(name)
-        //viewModel.databaseTest()
-        //viewModel.checkConnection()
+        println("search for user with name of $name")
+        viewModel.searchForUser(name)
     }
 
     fun onItemClicked(id : String, name : String) {

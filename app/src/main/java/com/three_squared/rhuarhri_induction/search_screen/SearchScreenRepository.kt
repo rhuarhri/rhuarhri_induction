@@ -11,8 +11,8 @@ class SearchScreenRepository @Inject constructor(
     private val connectionChecker: ConnectionChecker
 ) {
 
-    suspend fun getUserInfo(userName: String): User {
-        val foundUser: UserOnline? = onlineQueryHandler.getUser(userName)
+    suspend fun getUserInfo(userName: String): User? {
+        return onlineQueryHandler.getUser(userName)
 
         /*return if (foundUser != null) {
             val id = foundUser.id ?: ""
@@ -23,8 +23,6 @@ class SearchScreenRepository @Inject constructor(
         } else {
             User("", "", "", "", listOf())
         }*/
-
-        return User("", "", "", "", listOf())
     }
 
     /*suspend fun getUserFromCache(userId : String) : User {

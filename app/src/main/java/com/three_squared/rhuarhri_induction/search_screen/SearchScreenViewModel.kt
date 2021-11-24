@@ -27,7 +27,10 @@ class SearchScreenViewModel @Inject constructor(private val searchScreenReposito
             val foundUser = searchScreenRepository.getUserInfo(userName)
 
             withContext(Dispatchers.Main) {
-                userInfo.value = foundUser
+                if (foundUser != null) {
+                    userInfo.value = foundUser
+                    repositoryList.value = foundUser.repositoryList
+                }
             }
         }
     }
