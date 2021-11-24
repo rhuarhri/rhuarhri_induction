@@ -15,7 +15,7 @@ import javax.inject.Inject
 class SearchScreenViewModel @Inject constructor(private val searchScreenRepository: SearchScreenRepository): ViewModel() {
 
     val userInfo : MutableLiveData<User> by lazy {
-        MutableLiveData<User>(User("", "", "", ""))
+        MutableLiveData<User>(User("", "", "", "", listOf()))
     }
 
     val repositoryList : MutableLiveData<List<Repository>> by lazy {

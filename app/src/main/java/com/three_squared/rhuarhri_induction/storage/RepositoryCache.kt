@@ -7,7 +7,7 @@ import io.realm.kotlin.executeTransactionAwait
 import javax.inject.Inject
 
 class RepositoryCache @Inject constructor(realmConfig : RealmConfiguration) : CacheParent<Repository>(realmConfig) {
-    override suspend fun add(repository : Repository) {
+    suspend fun add(repository : Repository) {
         val realm = super.getInstance()
         realm.executeTransactionAwait { transaction ->
             val repositoryInternal = RepositoryInternal(id = repository.id, name = repository.name,
@@ -16,7 +16,7 @@ class RepositoryCache @Inject constructor(realmConfig : RealmConfiguration) : Ca
         }
     }
 
-    override suspend fun get(): List<Repository> {
+    suspend fun get(): List<Repository> {
         val repoList = mutableListOf<Repository>()
 
         val realm = super.getInstance()
@@ -29,7 +29,7 @@ class RepositoryCache @Inject constructor(realmConfig : RealmConfiguration) : Ca
         return repoList
     }
 
-    override suspend fun clear() {
+    suspend fun clear() {
 
     }
 }

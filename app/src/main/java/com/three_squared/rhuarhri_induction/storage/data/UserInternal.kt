@@ -1,5 +1,6 @@
 package com.three_squared.rhuarhri_induction.storage.data
 
+import io.realm.RealmList
 import io.realm.RealmObject
 import io.realm.annotations.PrimaryKey
 import io.realm.annotations.Required
@@ -7,7 +8,7 @@ import org.bson.types.ObjectId
 
 open class UserInternal (
     @PrimaryKey
-    var primaryKey : String = ObjectId().toHexString(), //TODO remove primary key
+    //var primaryKey : String = ObjectId().toHexString(), //TODO remove primary key
     @Required
     var id : String = "",
     @Required
@@ -15,5 +16,6 @@ open class UserInternal (
     @Required
     var avatarUrl : String = "",
     @Required
-    var repositoryUrl : String = ""
+    var repositoryUrl : String = "",
+    var repositories : RealmList<RepositoryInternal> = RealmList()
 ) : RealmObject()

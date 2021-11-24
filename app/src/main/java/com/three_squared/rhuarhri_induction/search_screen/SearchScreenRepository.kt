@@ -14,15 +14,17 @@ class SearchScreenRepository @Inject constructor(
     suspend fun getUserInfo(userName: String): User {
         val foundUser: UserOnline? = onlineQueryHandler.getUser(userName)
 
-        return if (foundUser != null) {
+        /*return if (foundUser != null) {
             val id = foundUser.id ?: ""
             val name = foundUser.name ?: ""
             val avatar = foundUser.avatar ?: ""
             val repoList = foundUser.repoListURL ?: ""
             User(id, repoList, name, avatar)
         } else {
-            User("", "", "", "")
-        }
+            User("", "", "", "", listOf())
+        }*/
+
+        return User("", "", "", "", listOf())
     }
 
     /*suspend fun getUserFromCache(userId : String) : User {

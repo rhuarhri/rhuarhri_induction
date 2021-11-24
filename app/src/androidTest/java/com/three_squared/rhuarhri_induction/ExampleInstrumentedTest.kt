@@ -2,6 +2,8 @@ package com.three_squared.rhuarhri_induction
 
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import com.three_squared.rhuarhri_induction.data.Commit
+import com.three_squared.rhuarhri_induction.data.Repository
 import com.three_squared.rhuarhri_induction.data.User
 import com.three_squared.rhuarhri_induction.storage.CacheParent
 import com.three_squared.rhuarhri_induction.storage.UserCache
@@ -37,17 +39,27 @@ class ExampleInstrumentedTest {
 @RunWith(AndroidJUnit4::class)
 class RealmTests {
 
-    private val dummyData = mutableListOf<User>()
-    //private lateinit var appContext : Context
+    private val dummyUserData = mutableListOf<User>()
+    private val dummyRepositoryData = mutableListOf<Repository>()
+    private val dummyCommitData = mutableListOf<Commit>()
+
     private var testConfig : RealmConfiguration? = null
 
     @Before
     fun setupDummyData() {
-        dummyData.addAll(
+        dummyUserData.addAll(
             listOf(
-                User("1", "repoURL", "Sam", "avatar"),
-                User("2", "repoURL", "Jack", "avatar"),
-                User("3", "repoURL", "Jim", "avatar")
+                User("1", "repoURL", "Sam", "avatar", listOf()),
+                User("2", "repoURL", "Jack", "avatar", listOf()),
+                User("3", "repoURL", "Jim", "avatar", listOf())
+            )
+        )
+
+        dummyRepositoryData.addAll(
+            listOf(
+                Repository("1", "repo 1", "public", "description"),
+                Repository("2", "repo 2", "public", "description"),
+                Repository("3", "repo 3", "public", "description"),
             )
         )
 
@@ -99,7 +111,7 @@ class RealmTests {
 
         val userCache = UserCache(testConfig!!)
 
-        for (data in dummyData) {
+        for (data in dummyUserData) {
             userCache.add(data)
         }
 
@@ -114,6 +126,39 @@ class RealmTests {
         assertEquals("check name in result", expectedName, foundUser.name)
     }
 
+    @Test
+    fun addRepositoryToUser() {
+
+    }
+
+    @Test
+    fun updateUser() = runBlocking {
+        //this check if the up to date information of the user
+        //replaces the existing information stored in the database
+
+        val userCache = UserCache(testConfig!!)
+
+        val existingUser = dummyUserData.first()
+
+        userCache.add(existingUser)
+
+        val newName = "Jack"
+        val newUpdatedUser = User(existingUser.id, existingUser.repoListURL,
+            newName, existingUser.avatar, existingUser.repositoryList)
+
+        userCache.add(newUpdatedUser)
+
+        val foundUser = userCache.get(existingUser.id)
+
+        assertNotEquals("check has result", null, foundUser)
+        assertEquals("check name change", newName, foundUser!!.name)
+    }
+
     //end of user cache tests
+
+    @Test
+    fun getRepositoriesTest() = runBlocking {
+
+    }
 
 }

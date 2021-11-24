@@ -13,18 +13,6 @@ open class CacheParent<T>(private val realmConfig : RealmConfiguration) {
         return Realm.getInstance(realmConfig)
     }
 
-    open suspend fun add(data : T) {
-
-    }
-
-    open suspend fun get() : List<T> {
-        return listOf()
-    }
-
-    open suspend fun clear() {
-
-    }
-
     suspend fun deleteAll() {
         val realm = getInstance()
 

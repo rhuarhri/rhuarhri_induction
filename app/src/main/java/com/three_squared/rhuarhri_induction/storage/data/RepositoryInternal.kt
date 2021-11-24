@@ -1,5 +1,6 @@
 package com.three_squared.rhuarhri_induction.storage.data
 
+import com.three_squared.rhuarhri_induction.data.User
 import io.realm.RealmObject
 import io.realm.annotations.PrimaryKey
 import io.realm.annotations.Required
@@ -15,5 +16,5 @@ open class RepositoryInternal (
     @Required
     var visibility : String = "",
     @Required
-    var description : String = ""
+    var description : String = "",
 ) : RealmObject()

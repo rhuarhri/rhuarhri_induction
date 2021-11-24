@@ -5,4 +5,5 @@ data class User(
     val repoListURL : String,
     val name : String,
     val avatar : String,
+    val repositoryList : List<Repository>
 )
