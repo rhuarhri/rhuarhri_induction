@@ -7,18 +7,14 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.three_squared.rhuarhri_induction.R
 import com.three_squared.rhuarhri_induction.data.Repository
+import com.three_squared.rhuarhri_induction.data.User
 
-class SearchListAdapter(private val items : List<Repository>, private val itemClicked : (id : String, name : String) -> Unit) : RecyclerView.Adapter<SearchListAdapter.ItemViewHolder>() {
+class SearchListAdapter(private val items : List<Repository>, private val itemClicked : (repository: Repository) -> Unit) : RecyclerView.Adapter<SearchListAdapter.ItemViewHolder>() {
 
     class ItemViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val titleTXT : TextView = itemView.findViewById(R.id.itemTitleTXT)
         val visibilityTXT : TextView = itemView.findViewById(R.id.repoTypeTXT)
-
-        /*fun bind(clickListener: () -> Unit) {
-            itemView.setOnClickListener {
-                clickListener.invoke()
-            }
-        }*/
+        val descriptionTXT : TextView = itemView.findViewById(R.id.itemDescriptionTXT)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemViewHolder {
@@ -30,14 +26,14 @@ class SearchListAdapter(private val items : List<Repository>, private val itemCl
         val item = items[position]
         holder.titleTXT.text = item.name
         holder.visibilityTXT.text = item.visibility
+        holder.descriptionTXT.text = item.description
         val onClick = {
-            itemClicked.invoke(item.id, item.name)
+            itemClicked.invoke(item)
         }
 
         holder.itemView.setOnClickListener {
             onClick.invoke()
         }
-        //holder.bind(onClick)
     }
 
     override fun getItemCount(): Int {

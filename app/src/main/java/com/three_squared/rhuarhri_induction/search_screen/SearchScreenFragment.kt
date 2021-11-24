@@ -5,9 +5,12 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.os.bundleOf
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
+import androidx.navigation.fragment.findNavController
+import com.three_squared.rhuarhri_induction.R
 import com.three_squared.rhuarhri_induction.data.Repository
 import com.three_squared.rhuarhri_induction.data.User
 import com.three_squared.rhuarhri_induction.databinding.SearchScreenFragmentBinding
@@ -114,9 +117,15 @@ class SearchScreenFragment : Fragment() {
         viewModel.searchForUser(name)
     }
 
-    fun onItemClicked(id : String, name : String) {
-        println("repo item name is $name")
-        println("repo item id is $id")
+    fun onItemClicked(repository : Repository) {
+
+        val data = bundleOf(
+            "id" to repository.id,
+            "name" to repository.name,
+            "description" to repository.description,
+            "visibility" to repository.visibility
+        )
+        findNavController().navigate(R.id.action_searchScreenFragment_to_viewCommitScreenFragment, data)
     }
 
 }

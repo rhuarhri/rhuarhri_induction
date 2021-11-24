@@ -13,6 +13,15 @@
         <action
             android:id="@+id/action_searchScreenFragment_to_viewCommitScreenFragment"
             app:destination="@id/viewCommitScreenFragment" />
+        <argument
+            android:name="repoName"
+            app:argType="string" />
+        <argument
+            android:name="repoDescription"
+            app:argType="string" />
+        <argument
+            android:name="repoVisibility"
+            app:argType="string" />
     </fragment>
     <fragment
         android:id="@+id/viewCommitScreenFragment"

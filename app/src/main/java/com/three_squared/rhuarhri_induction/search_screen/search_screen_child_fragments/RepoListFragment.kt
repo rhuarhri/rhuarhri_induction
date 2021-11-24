@@ -50,8 +50,8 @@ class RepoListFragment : Fragment() {
             }
         }
 
-        binding.searchResultRV.adapter = SearchListAdapter(displayedRepoList) { id, name ->
-            (parentFragment as SearchScreenFragment?)?.onItemClicked(id, name)
+        binding.searchResultRV.adapter = SearchListAdapter(displayedRepoList) { repository ->
+            (parentFragment as SearchScreenFragment?)?.onItemClicked(repository)
         }
 
         binding.searchResultRV.layoutManager = LinearLayoutManager(this.context)
