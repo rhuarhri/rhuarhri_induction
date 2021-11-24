@@ -37,10 +37,7 @@ class SearchScreenFragment : Fragment() {
         binding.viewmodel = viewModel
 
         setupSearchFragment("", "")
-        setupRepoList(listOf(
-            Repository("1", "Project 1", "Private", "test"),
-            Repository("2", "Project 2", "Public", "test")
-        ))
+        setupRepoList(listOf())
 
         val userInfoObserver = Observer<User> { user ->
             setupSearchFragment(user.name, user.avatar)
@@ -48,14 +45,7 @@ class SearchScreenFragment : Fragment() {
         viewModel.userInfo.observe(viewLifecycleOwner, userInfoObserver)
 
         val repoListObserver = Observer<List<Repository>> { repoList ->
-            //setupRepoList(repoList)
-            if (repoList.isNotEmpty()) {
-                for (repo in repoList) {
-                    println("found repo name is ${repo.name}")
-                }
-            } else {
-                println("repo list is empty")
-            }
+            setupRepoList(repoList)
         }
 
         viewModel.repositoryList.observe(viewLifecycleOwner, repoListObserver)
