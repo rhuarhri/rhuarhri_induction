@@ -12,6 +12,7 @@
         <entry key="app/src/main/res/layout/fragment_search.xml" value="0.223731884057971" />
         <entry key="app/src/main/res/layout/repositiory_item_layout.xml" value="0.375" />
         <entry key="app/src/main/res/layout/search_screen_fragment.xml" value="0.2269021739130435" />
+        <entry key="app/src/main/res/layout/user_commits_item_layout.xml" value="0.32563405797101447" />
         <entry key="app/src/main/res/layout/user_screen_fragment.xml" value="0.2269021739130435" />
         <entry key="app/src/main/res/layout/view_commit_screen_fragment.xml" value="0.2269021739130435" />
       </map>

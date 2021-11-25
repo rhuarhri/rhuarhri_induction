@@ -7,7 +7,6 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.three_squared.rhuarhri_induction.R
 import com.three_squared.rhuarhri_induction.data.Repository
-import com.three_squared.rhuarhri_induction.data.User
 
 class SearchListAdapter(private val items : List<Repository>, private val itemClicked : (repository: Repository) -> Unit) : RecyclerView.Adapter<SearchListAdapter.ItemViewHolder>() {
 

@@ -4,13 +4,12 @@ import com.three_squared.rhuarhri_induction.data.Repository
 import com.three_squared.rhuarhri_induction.data.User
 import com.three_squared.rhuarhri_induction.storage.data.RepositoryInternal
 import com.three_squared.rhuarhri_induction.storage.data.UserInternal
-import io.realm.Realm
 import io.realm.RealmConfiguration
 import io.realm.RealmList
 import io.realm.kotlin.executeTransactionAwait
 import javax.inject.Inject
 
-class UserCache @Inject constructor(private val realmConfig : RealmConfiguration) : CacheParent<User>(realmConfig) {
+class UserCache @Inject constructor(realmConfig : RealmConfiguration) : CacheParent<User>(realmConfig) {
 
     suspend fun add(user: User) {
 

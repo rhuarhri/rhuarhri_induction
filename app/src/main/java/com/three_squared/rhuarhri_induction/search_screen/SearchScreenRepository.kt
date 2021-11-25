@@ -3,7 +3,6 @@ package com.three_squared.rhuarhri_induction.search_screen
 import com.three_squared.rhuarhri_induction.data.User
 import com.three_squared.rhuarhri_induction.online.ConnectionChecker
 import com.three_squared.rhuarhri_induction.online.QueryHandler
-import com.three_squared.rhuarhri_induction.online.data.UserOnline
 import javax.inject.Inject
 
 class SearchScreenRepository @Inject constructor(

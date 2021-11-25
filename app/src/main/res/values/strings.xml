@@ -5,4 +5,10 @@
     <string name="search_fragment_found_title">Found</string>
     <string name="search_fragment_user_image_description">User image</string>
     <string name="repo_list_fragment_title">Repositories</string>
+    <string name="user_image_description">User image</string>
+    <string name="user_screen_title">Commits</string>
+    <string name="user_screen_user_title">Committer</string>
+    <string name="user_screen_repository_button_title">Repositories</string>
+    <string name="user_commit_item_title">Commit</string>
+    <string name="view_commit_screen_commits_title">Commits</string>
 </resources>

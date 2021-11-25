@@ -51,13 +51,14 @@
             app:layout_constraintTop_toBottomOf="@+id/searchTextInputET" />
 
         <ImageView
-            android:id="@+id/userImageIV"
+            android:id="@+id/foundUserImageIV"
             android:layout_width="80dp"
             android:layout_height="80dp"
             android:layout_marginStart="8dp"
             android:contentDescription="@string/search_fragment_user_image_description"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/foundTitleTXT"
+            app:srcCompat="@android:drawable/sym_def_app_icon"
             tools:src="@tools:sample/avatars" />
 
         <TextView
@@ -71,7 +72,7 @@
             app:layout_constraintTop_toBottomOf="@+id/searchBTN" />
 
         <TextView
-            android:id="@+id/userNameTXT"
+            android:id="@+id/foundUserNameTXT"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
@@ -79,8 +80,8 @@
             android:textColor="@color/black"
             android:textSize="24sp"
             android:textStyle="bold"
-            app:layout_constraintStart_toStartOf="@+id/userImageIV"
-            app:layout_constraintTop_toBottomOf="@+id/userImageIV" />
+            app:layout_constraintStart_toStartOf="@+id/foundUserImageIV"
+            app:layout_constraintTop_toBottomOf="@+id/foundUserImageIV" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

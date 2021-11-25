@@ -6,6 +6,7 @@ import com.three_squared.rhuarhri_induction.online.ConnectionChecker
 import com.three_squared.rhuarhri_induction.online.QueryHandler
 import com.three_squared.rhuarhri_induction.search_screen.SearchScreenRepository
 import com.three_squared.rhuarhri_induction.storage.*
+import com.three_squared.rhuarhri_induction.view_commit_screen.ViewCommitScreenRepository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -67,6 +68,12 @@ class Dependencies {
     @Provides
     fun provideSearchScreenRepository(@ApplicationContext app : Context) : SearchScreenRepository {
         return SearchScreenRepository(provideQueryHandler(), provideConnectionChecker(app))
+    }
+
+    @Singleton
+    @Provides
+    fun provideViewCommitScreenRepository() : ViewCommitScreenRepository {
+        return ViewCommitScreenRepository(provideQueryHandler())
     }
 
     @Singleton

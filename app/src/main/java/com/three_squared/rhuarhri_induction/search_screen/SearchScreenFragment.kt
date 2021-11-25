@@ -22,7 +22,6 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class SearchScreenFragment : Fragment() {
 
-
     private lateinit var binding: SearchScreenFragmentBinding
     private lateinit var viewModel: SearchScreenViewModel
 
@@ -119,7 +118,10 @@ class SearchScreenFragment : Fragment() {
 
     fun onItemClicked(repository : Repository) {
 
+        val userName : String = viewModel.userInfo.value?.name ?: ""
+
         val data = bundleOf(
+            "ownerName" to userName,
             "id" to repository.id,
             "name" to repository.name,
             "description" to repository.description,

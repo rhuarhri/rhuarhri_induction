@@ -1,5 +1,6 @@
 package com.three_squared.rhuarhri_induction.online
 
+import com.three_squared.rhuarhri_induction.data.Commit
 import com.three_squared.rhuarhri_induction.data.Repository
 import com.three_squared.rhuarhri_induction.data.User
 import retrofit2.Retrofit
@@ -38,12 +39,12 @@ class QueryHandler @Inject constructor(private val retroFit : Retrofit) {
                 return null
             }
         } catch (e : Exception) {
-            println("error was ${e}")
+            println("error was $e")
             return null
         }
     }
 
-    suspend fun getRepositories(userName : String) : List<Repository> {
+    private suspend fun getRepositories(userName : String) : List<Repository> {
         val retrofitInterface = retroFit.create(RetroFitInterface::class.java)
 
         try {
@@ -81,7 +82,58 @@ class QueryHandler @Inject constructor(private val retroFit : Retrofit) {
                 return listOf()
             }
         } catch (e : Exception) {
-            println("error was ${e}")
+            println("error was $e")
+            return listOf()
+        }
+    }
+
+    suspend fun getCommits(userName: String, repositoryName : String) : List<Commit> {
+        val retrofitInterface = retroFit.create(RetroFitInterface::class.java)
+
+        try {
+            val response = retrofitInterface.getCommits(userName, repositoryName).awaitResponse()
+
+            return if (response.isSuccessful) {
+                val foundOnlineCommits = response.body()
+
+                if (foundOnlineCommits != null) {
+                    val foundCommits = mutableListOf<Commit>()
+
+                    for (onlineCommit in foundOnlineCommits) {
+
+                        val committer = onlineCommit.committer
+
+                        val commitId = onlineCommit.id ?: ""
+
+                        val committerName = committer?.name ?: ""
+
+                        val committerId = committer?.id ?: ""
+
+                        val committerAvatar = onlineCommit.committer?.avatar ?: ""
+
+                        val commitMessage = onlineCommit.commit?.message ?: ""
+
+                        foundCommits.add(
+                            Commit(
+                                commitId,
+                                committerName,
+                                committerId,
+                                committerAvatar,
+                                commitMessage
+                            )
+                        )
+                    }
+
+                    return foundCommits
+
+                } else {
+                    listOf()
+                }
+            } else {
+                listOf()
+            }
+        } catch (e : Exception) {
+            println("error was $e")
             return listOf()
         }
     }

@@ -1,10 +1,9 @@
 package com.three_squared.rhuarhri_induction.storage.data
 
-import com.three_squared.rhuarhri_induction.data.User
+
 import io.realm.RealmObject
 import io.realm.annotations.PrimaryKey
 import io.realm.annotations.Required
-import org.bson.types.ObjectId
 
 open class RepositoryInternal (
     @PrimaryKey

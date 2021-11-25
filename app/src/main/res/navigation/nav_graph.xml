@@ -37,8 +37,17 @@
         android:name="com.three_squared.rhuarhri_induction.user_screen.UserScreenFragment"
         android:label="user_screen_fragment"
         tools:layout="@layout/user_screen_fragment" >
+        <argument
+            android:name="userId"
+            app:argType="string" />
+        <argument
+            android:name="userName"
+            app:argType="string" />
+        <argument
+            android:name="userAvatarURL"
+            app:argType="string" />
         <action
-            android:id="@+id/action_userScreenFragment_to_viewCommitScreenFragment"
-            app:destination="@id/viewCommitScreenFragment" />
+            android:id="@+id/action_userScreenFragment_to_searchScreenFragment"
+            app:destination="@id/searchScreenFragment" />
     </fragment>
 </navigation>
