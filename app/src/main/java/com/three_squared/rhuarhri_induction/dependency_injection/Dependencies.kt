@@ -67,7 +67,8 @@ class Dependencies {
     @Singleton
     @Provides
     fun provideSearchScreenRepository(@ApplicationContext app : Context) : SearchScreenRepository {
-        return SearchScreenRepository(provideQueryHandler(), provideConnectionChecker(app))
+        return SearchScreenRepository(provideQueryHandler(),
+            provideConnectionChecker(app), provideUserCache())
     }
 
     @Singleton

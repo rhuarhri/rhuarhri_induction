@@ -132,6 +132,17 @@ class UserCache @Inject constructor(realmConfig : RealmConfiguration) : CachePar
         return User(userInternal.id, userInternal.repositoryUrl, userInternal.name, userInternal.avatarUrl, repositoryList)
     }
 
+    suspend fun update(users : List<User>) {
+        val expired = super.hasCacheExpired()
+        if (expired) {
+            super.deleteAll()
+        }
+
+        for (user in users) {
+            add(user)
+        }
+    }
+
     suspend fun clear() {
         val realm = getInstance()
         realm.executeTransactionAwait { transaction ->

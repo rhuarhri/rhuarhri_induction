@@ -6,6 +6,7 @@ import com.three_squared.rhuarhri_induction.data.Commit
 import com.three_squared.rhuarhri_induction.data.Repository
 import com.three_squared.rhuarhri_induction.data.User
 import com.three_squared.rhuarhri_induction.storage.CacheParent
+import com.three_squared.rhuarhri_induction.storage.CommitCache
 import com.three_squared.rhuarhri_induction.storage.RepositoryCache
 import com.three_squared.rhuarhri_induction.storage.UserCache
 import com.three_squared.rhuarhri_induction.storage.data.CacheHistory
@@ -61,6 +62,14 @@ class RealmTests {
                 Repository("1", "repo 1", "public", "description"),
                 Repository("2", "repo 2", "public", "description"),
                 Repository("3", "repo 3", "public", "description"),
+            )
+        )
+
+        dummyCommitData.addAll(
+            listOf(
+                Commit("1", "Dave", "1", "avatar", "commit 1"),
+                Commit("2", "Jack", "2", "avatar", "commit 2"),
+                Commit("3", "Dave", "1", "avatar", "commit 3")
             )
         )
 
@@ -161,6 +170,7 @@ class RealmTests {
 
     //end of user cache tests
 
+    //start of repository cache test
     @Test
     fun updateRepositoryTest() = runBlocking {
         val repoCache = RepositoryCache(testConfig!!)
@@ -190,4 +200,32 @@ class RealmTests {
 
     }
 
+    //end of repository cache test
+    //start of commit cache test
+    @Test
+    fun updateCommitTest() = runBlocking {
+        val commitCache = CommitCache(testConfig!!)
+
+        val existingCommit = dummyCommitData.first()
+
+        commitCache.add(existingCommit)
+
+        val newCommitterName = "Tom"
+        val newCommitterId = "3"
+        val newCommitterAvatar = "Avatar 1"
+        val newCommitMessage = "New commit message"
+        val newCommit = Commit(existingCommit.commitId, newCommitterName, newCommitterId,
+            newCommitterAvatar, newCommitMessage)
+
+        commitCache.add(newCommit)
+
+        val foundCommit = commitCache.getById(existingCommit.commitId)
+
+        assertNotEquals("check result exists", null, foundCommit)
+        assertEquals("check committer name", newCommitterName, foundCommit!!.committerName)
+        assertEquals("check committer id", newCommitterId, foundCommit.committerId)
+        assertEquals("check committer avatar", newCommitterAvatar, foundCommit.committerAvatar)
+        assertEquals("check commit message", newCommitMessage, foundCommit.message)
+    }
+    //end of commit cache test
 }
