@@ -58,7 +58,7 @@ class SearchScreenFragment : Fragment() {
     }
 
     private fun setupSearchFragment(name : String, avatarUrl : String) {
-        val searchFragment = SearchFragment.newInstance(name)
+        val searchFragment = SearchFragment.newInstance(name, avatarUrl)
 
         val fragmentManger : FragmentManager = this.childFragmentManager
         fragmentManger.beginTransaction().apply {

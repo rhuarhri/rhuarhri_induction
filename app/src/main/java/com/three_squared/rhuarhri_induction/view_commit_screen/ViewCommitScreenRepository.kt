@@ -26,9 +26,13 @@ class ViewCommitScreenRepository @Inject constructor(
                 //online only
                 val onlineCommits = queryHandler.getCommits(userName, repositoryName)
 
+                commitCache.update(onlineCommits)
+
                 updateLiveData(onlineCommits)
 
-                commitCache.update(onlineCommits)
+                withContext(Dispatchers.IO) {
+                    //commitCache.update(onlineCommits)
+                }
             }
             ConnectionType.WEAK -> {
                 //cache first
@@ -41,7 +45,9 @@ class ViewCommitScreenRepository @Inject constructor(
 
                     updateLiveData(onlineCommits)
 
-                    commitCache.update(onlineCommits)
+                    withContext(Dispatchers.IO) {
+                        commitCache.update(onlineCommits)
+                    }
                 }
 
             }

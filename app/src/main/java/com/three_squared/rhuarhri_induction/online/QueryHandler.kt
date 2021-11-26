@@ -101,17 +101,29 @@ class QueryHandler @Inject constructor(private val retroFit : Retrofit) {
 
                     for (onlineCommit in foundOnlineCommits) {
 
-                        val committer = onlineCommit.committer
+                        val committerName = if (onlineCommit.commit != null) {
+                            if (onlineCommit.commit.committer != null) {
+                                onlineCommit.commit.committer.name ?: ""
+                            } else {
+                                ""
+                            }
+                        } else {
+                            ""
+                        }
+
+                        val committer = getUser(committerName) ?: User("", "", "", "", listOf())
 
                         val commitId = onlineCommit.id ?: ""
 
-                        val committerName = committer?.name ?: ""
+                        //val committerName = committer?.name ?: ""
 
-                        val committerId = committer?.id ?: ""
+                        val committerId = committer.id
 
-                        val committerAvatar = onlineCommit.committer?.avatar ?: ""
+                        val committerAvatar = committer.avatar
 
                         val commitMessage = onlineCommit.commit?.message ?: ""
+
+                        println("committer name was $committerName on commit with message of $commitMessage with avatar utl of $committerAvatar")
 
                         foundCommits.add(
                             Commit(

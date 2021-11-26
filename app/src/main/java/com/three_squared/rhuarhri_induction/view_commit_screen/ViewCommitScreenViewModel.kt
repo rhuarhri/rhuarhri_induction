@@ -39,8 +39,10 @@ class ViewCommitScreenViewModel @Inject constructor(private val repo : ViewCommi
     }
 
     fun getCommits(userName : String, repositoryName : String) {
-        viewModelScope.launch(Dispatchers.IO) {
-            repo.getCommits(userName, repositoryName)
+        if (repo.commitList.value.isNullOrEmpty()) {
+            viewModelScope.launch(Dispatchers.IO) {
+                repo.getCommits(userName, repositoryName)
+            }
         }
     }
 }
