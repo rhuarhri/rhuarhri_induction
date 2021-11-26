@@ -14,6 +14,7 @@ interface RetroFitInterface {
     @GET("users/{name}/repos")
     fun getRepositories(@Path(value = "name") name : String): Call<List<RepositoryOnline>>
 
+
     @GET("repos/{name}/{repository}/commits")
     fun getCommits(@Path(value = "name") name : String,
                    @Path(value = "repository") repositoryName : String)
