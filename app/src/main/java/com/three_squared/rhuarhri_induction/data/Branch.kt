@@ -1,3 +1,4 @@
 package com.three_squared.rhuarhri_induction.data
 
-data class Branch(val name : String)
+data class Branch(
+    val name : String)
