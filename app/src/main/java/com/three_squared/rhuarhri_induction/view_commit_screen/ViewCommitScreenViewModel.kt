@@ -4,12 +4,10 @@ import android.os.Bundle
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.three_squared.rhuarhri_induction.data.Commit
 import com.three_squared.rhuarhri_induction.data.Repository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 @HiltViewModel
@@ -42,8 +40,7 @@ class ViewCommitScreenViewModel @Inject constructor(private val repo : ViewCommi
 
     fun getCommits(userName : String, repositoryName : String) {
         viewModelScope.launch(Dispatchers.IO) {
-            val commits = repo.getCommits(userName, repositoryName)
-
+            repo.getCommits(userName, repositoryName)
         }
     }
 }

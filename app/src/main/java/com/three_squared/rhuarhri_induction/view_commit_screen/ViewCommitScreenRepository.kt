@@ -53,7 +53,6 @@ class ViewCommitScreenRepository @Inject constructor(
 
     }
 
-
     private suspend fun updateLiveData(commits : List<Commit>) {
         withContext(Dispatchers.Main) {
             commitList.value = commits

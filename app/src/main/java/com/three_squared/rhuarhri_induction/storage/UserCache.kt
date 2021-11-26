@@ -143,10 +143,10 @@ class UserCache @Inject constructor(realmConfig : RealmConfiguration) : CachePar
         }
     }
 
-    suspend fun clear() {
+    /*suspend fun clear() {
         val realm = getInstance()
         realm.executeTransactionAwait { transaction ->
             transaction.where(UserInternal::class.java).findAll().deleteAllFromRealm()
         }
-    }
+    }*/
 }

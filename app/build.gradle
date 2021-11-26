@@ -81,10 +81,6 @@ dependencies {
     implementation "androidx.lifecycle:lifecycle-livedata-ktx:$livedata"
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$viewmodel"
 
-    //moshi
-    //implementation "com.squareup.moshi:moshi:$moshi_version"
-    //kapt "com.squareup.moshi:moshi-kotlin-codegen:$moshi_version"
-
     // retro fit
     implementation "com.squareup.retrofit2:retrofit:$retrofit_version"
     implementation "com.squareup.retrofit2:converter-moshi:$retrofit_version"

@@ -75,8 +75,4 @@ class RepositoryCache @Inject constructor(realmConfig : RealmConfiguration) : Ca
         return Repository(repositoryInternal.id, repositoryInternal.name,
             repositoryInternal.visibility, repositoryInternal.description)
     }
-
-    suspend fun clear() {
-
-    }
 }
