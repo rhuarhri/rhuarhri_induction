@@ -21,9 +21,7 @@ class ViewCommitScreenViewModel @Inject constructor(private val repo : ViewCommi
         )
     }
 
-    val commitList : MutableLiveData<List<Commit>> by lazy {
-        MutableLiveData<List<Commit>>(listOf())
-    }
+    val commitList = repo.commitList
 
     private var repositoryOwnerName = ""
     fun getRepositoryOwnerName() : String {
@@ -46,9 +44,6 @@ class ViewCommitScreenViewModel @Inject constructor(private val repo : ViewCommi
         viewModelScope.launch(Dispatchers.IO) {
             val commits = repo.getCommits(userName, repositoryName)
 
-            withContext(Dispatchers.Main) {
-                commitList.value = commits
-            }
         }
     }
 }

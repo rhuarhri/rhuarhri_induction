@@ -28,7 +28,7 @@ class UserScreenViewModel : ViewModel() {
 
             val newCommitList : MutableList<Commit> = mutableListOf()
             for (message in commitMessages) {
-                newCommitList.add(Commit("", "", "", "", message))
+                newCommitList.add(Commit("", "", "", "", message, ""))
             }
 
             user.value = User(id, "", name, avatar, listOf())

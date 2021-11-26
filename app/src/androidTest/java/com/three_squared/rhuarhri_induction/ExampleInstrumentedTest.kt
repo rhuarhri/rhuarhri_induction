@@ -67,9 +67,9 @@ class RealmTests {
 
         dummyCommitData.addAll(
             listOf(
-                Commit("1", "Dave", "1", "avatar", "commit 1"),
-                Commit("2", "Jack", "2", "avatar", "commit 2"),
-                Commit("3", "Dave", "1", "avatar", "commit 3")
+                Commit("1", "Dave", "1", "avatar", "commit 1", "1"),
+                Commit("2", "Jack", "2", "avatar", "commit 2", "1"),
+                Commit("3", "Dave", "1", "avatar", "commit 3", "1")
             )
         )
 
@@ -214,8 +214,9 @@ class RealmTests {
         val newCommitterId = "3"
         val newCommitterAvatar = "Avatar 1"
         val newCommitMessage = "New commit message"
+        val newRepositoryName = "2"
         val newCommit = Commit(existingCommit.commitId, newCommitterName, newCommitterId,
-            newCommitterAvatar, newCommitMessage)
+            newCommitterAvatar, newCommitMessage, newRepositoryName)
 
         commitCache.add(newCommit)
 
@@ -226,6 +227,7 @@ class RealmTests {
         assertEquals("check committer id", newCommitterId, foundCommit.committerId)
         assertEquals("check committer avatar", newCommitterAvatar, foundCommit.committerAvatar)
         assertEquals("check commit message", newCommitMessage, foundCommit.message)
+        assertEquals("check commit repository name", newRepositoryName, foundCommit.repositoryName)
     }
     //end of commit cache test
 }

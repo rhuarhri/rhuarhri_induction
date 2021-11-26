@@ -119,7 +119,8 @@ class QueryHandler @Inject constructor(private val retroFit : Retrofit) {
                                 committerName,
                                 committerId,
                                 committerAvatar,
-                                commitMessage
+                                commitMessage,
+                                repositoryName
                             )
                         )
                     }

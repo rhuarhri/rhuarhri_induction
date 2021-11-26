@@ -13,7 +13,7 @@ class CommitCache @Inject constructor(realmConfig : RealmConfiguration) : CacheP
 
         if (foundCommit == null) {
             val commitInternal = CommitInternal(commit.commitId, commit.committerId,
-                commit.committerName, commit.committerAvatar, commit.message)
+                commit.committerName, commit.committerAvatar, commit.message, commit.repositoryName)
             val realm = super.getInstance()
             realm.executeTransactionAwait { transaction ->
                 transaction.insert(commitInternal)
@@ -33,6 +33,7 @@ class CommitCache @Inject constructor(realmConfig : RealmConfiguration) : CacheP
                 foundCommit.committerName = commit.committerName
                 foundCommit.committerAvatar = commit.committerAvatar
                 foundCommit.message = commit.message
+                foundCommit.repositoryName = commit.repositoryName
             }
         }
     }
@@ -50,7 +51,8 @@ class CommitCache @Inject constructor(realmConfig : RealmConfiguration) : CacheP
                     foundCommit.committerName,
                     foundCommit.committerId,
                     foundCommit.committerAvatar,
-                    foundCommit.message
+                    foundCommit.message,
+                    foundCommit.repositoryName
                 )
             }
         }
@@ -58,7 +60,37 @@ class CommitCache @Inject constructor(realmConfig : RealmConfiguration) : CacheP
         return commit
     }
 
-    suspend fun clear() {
-        TODO("Not yet implemented")
+    suspend fun getByRepositoryName(name : String) : List<Commit> {
+        val commitList = mutableListOf<Commit>()
+
+        val realm = super.getInstance()
+        realm.executeTransactionAwait { transaction ->
+            val foundCommits = transaction.where(CommitInternal::class.java)
+                .equalTo("repositoryName", name).findAll()
+
+            for (internalCommit in foundCommits) {
+                commitList.add(
+                    Commit(internalCommit.id,
+                        internalCommit.committerName,
+                        internalCommit.committerId,
+                        internalCommit.committerAvatar,
+                        internalCommit.message,
+                        internalCommit.repositoryName)
+                )
+            }
+        }
+
+        return commitList
+    }
+
+    suspend fun update(commits : List<Commit>) {
+        val expired = super.hasCacheExpired()
+        if (expired) {
+            super.deleteAll()
+        }
+
+        for (commit in commits) {
+            add(commit)
+        }
     }
 }

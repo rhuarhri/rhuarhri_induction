@@ -5,4 +5,6 @@ data class Commit(
     val committerName : String,
     val committerId : String,
     val committerAvatar : String,
-    val message : String)
+    val message : String,
+    val repositoryName : String
+)

@@ -15,5 +15,7 @@ open class CommitInternal(
     @Required
     var committerAvatar : String = "",
     @Required
-    var message : String = ""
+    var message : String = "",
+    @Required
+    var repositoryName : String = ""
 ) : RealmObject()
