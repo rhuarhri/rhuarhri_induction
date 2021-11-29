@@ -30,16 +30,18 @@ class SearchScreenRepository @Inject constructor(
         when(connectionChecker.check()) {
             ConnectionType.STRONG -> {
                 //online only
+                println("online only")
                 val foundUser = onlineQueryHandler.getUser(userName)
 
-                updateLiveData(foundUser)
-
-                if (foundUser != null) {
+                if (foundUser.id.isNotBlank()) {
                     userCache.update(listOf(foundUser))
                 }
+
+                updateLiveData(foundUser)
             }
             ConnectionType.WEAK -> {
                 //cache first
+                println("cache first")
                 val usersInCache = userCache.getByName(userName)
 
                 if (usersInCache.isNotEmpty()) {
@@ -49,13 +51,14 @@ class SearchScreenRepository @Inject constructor(
 
                     updateLiveData(foundUser)
 
-                    if (foundUser != null) {
+                    if (foundUser.id.isNotBlank()) {
                         userCache.update(listOf(foundUser))
                     }
                 }
             }
             ConnectionType.NONE -> {
                 // cache only
+                println("cache only")
                 val usersInCache = userCache.getByName(userName)
                 if (usersInCache.isNotEmpty()) {
                     updateLiveData(usersInCache.first())

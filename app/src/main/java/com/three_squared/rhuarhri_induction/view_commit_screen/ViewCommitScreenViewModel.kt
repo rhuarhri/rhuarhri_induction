@@ -45,4 +45,10 @@ class ViewCommitScreenViewModel @Inject constructor(private val repo : ViewCommi
             }
         }
     }
+
+    override fun onCleared() {
+        super.onCleared()
+
+        repo.commitList.value = listOf()
+    }
 }

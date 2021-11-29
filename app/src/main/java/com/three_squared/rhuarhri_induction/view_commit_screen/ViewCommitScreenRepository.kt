@@ -21,21 +21,26 @@ class ViewCommitScreenRepository @Inject constructor(
 
     suspend fun getCommits(userName : String, repositoryName : String) {
 
+        println("user name is $userName")
+        println("repository name $repositoryName")
+
         when(connectionChecker.check()) {
             ConnectionType.STRONG -> {
                 //online only
+                println("online only")
                 val onlineCommits = queryHandler.getCommits(userName, repositoryName)
 
                 commitCache.update(onlineCommits)
 
                 updateLiveData(onlineCommits)
 
-                withContext(Dispatchers.IO) {
+                /*withContext(Dispatchers.IO) {
                     //commitCache.update(onlineCommits)
-                }
+                }*/
             }
             ConnectionType.WEAK -> {
                 //cache first
+                println("cache first")
                 val cachedCommits = commitCache.getByRepositoryName(repositoryName)
 
                 if (cachedCommits.isNotEmpty()) {
@@ -53,6 +58,7 @@ class ViewCommitScreenRepository @Inject constructor(
             }
             ConnectionType.NONE -> {
                 //cache only
+                println("cache only")
                 updateLiveData(commitCache.getByRepositoryName(repositoryName))
             }
         }

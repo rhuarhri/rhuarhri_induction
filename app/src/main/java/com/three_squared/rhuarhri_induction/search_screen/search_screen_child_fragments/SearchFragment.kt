@@ -1,7 +1,5 @@
 package com.three_squared.rhuarhri_induction.search_screen.search_screen_child_fragments
 
-import android.graphics.Bitmap
-import android.graphics.BitmapFactory
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -10,12 +8,6 @@ import android.view.ViewGroup
 import com.bumptech.glide.Glide
 import com.three_squared.rhuarhri_induction.databinding.FragmentSearchBinding
 import com.three_squared.rhuarhri_induction.search_screen.SearchScreenFragment
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
-import java.io.InputStream
-import java.net.URL
 
 class SearchFragment : Fragment() {
 

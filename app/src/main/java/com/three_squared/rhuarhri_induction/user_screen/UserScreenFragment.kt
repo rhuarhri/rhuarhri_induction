@@ -10,6 +10,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.bumptech.glide.Glide
 import com.three_squared.rhuarhri_induction.R
 import com.three_squared.rhuarhri_induction.data.Commit
 import com.three_squared.rhuarhri_induction.data.User
@@ -32,6 +33,10 @@ class UserScreenFragment : Fragment() {
 
         val userObserver = Observer<User> { user ->
             binding.userNameTXT.text = user.name
+
+            if (user.avatar.isNotBlank()) {
+                Glide.with(binding.root).load(user.avatar).into(binding.userAvatarIV)
+            }
         }
 
         viewModel.user.observe(viewLifecycleOwner, userObserver)

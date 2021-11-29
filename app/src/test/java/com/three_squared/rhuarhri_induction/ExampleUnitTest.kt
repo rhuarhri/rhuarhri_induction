@@ -1,5 +1,6 @@
 package com.three_squared.rhuarhri_induction
 
+import junit.framework.Assert.assertEquals
 import org.junit.Test
 
 /**
@@ -11,6 +12,8 @@ class ExampleUnitTest {
     @Test
     fun addition_isCorrect() {
         //throw UnsupportedOperationException("Not jet implemented")
-        //assertEquals("failing test",4, 2 + 2)
+        assertEquals("failing test",4, 2 + 2)
+
     }
 }
+

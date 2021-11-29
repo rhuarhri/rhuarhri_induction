@@ -120,6 +120,10 @@ class SearchScreenFragment : Fragment() {
 
         val userName : String = viewModel.userInfo.value?.name ?: ""
 
+        println("user name is $userName")
+        println("repository id ${repository.id}")
+        println("repository name ${repository.name}")
+
         val data = bundleOf(
             "ownerName" to userName,
             "id" to repository.id,
