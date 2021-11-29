@@ -4,10 +4,12 @@ import android.os.Bundle
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.three_squared.rhuarhri_induction.data.Commit
 import com.three_squared.rhuarhri_induction.data.Repository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 @HiltViewModel
@@ -19,7 +21,9 @@ class ViewCommitScreenViewModel @Inject constructor(private val repo : ViewCommi
         )
     }
 
-    val commitList = repo.commitList
+    val commitList : MutableLiveData<List<Commit>> by lazy {
+        MutableLiveData<List<Commit>>(listOf())
+    }
 
     private var repositoryOwnerName = ""
     fun getRepositoryOwnerName() : String {
@@ -39,16 +43,19 @@ class ViewCommitScreenViewModel @Inject constructor(private val repo : ViewCommi
     }
 
     fun getCommits(userName : String, repositoryName : String) {
-        if (repo.commitList.value.isNullOrEmpty()) {
+        if (commitList.value.isNullOrEmpty()) {
             viewModelScope.launch(Dispatchers.IO) {
-                repo.getCommits(userName, repositoryName)
+                val foundCommitList = repo.getCommits(userName, repositoryName)
+                withContext(Dispatchers.Main) {
+                    commitList.value = foundCommitList
+                }
             }
         }
     }
 
-    override fun onCleared() {
+    /*override fun onCleared() {
         super.onCleared()
 
         repo.commitList.value = listOf()
-    }
+    }*/
 }
