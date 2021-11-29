@@ -44,12 +44,13 @@ class ViewCommitScreenFragment : Fragment() {
 
         val commitListObserver = Observer<List<Commit>> { commitList ->
             binding.commitsRV.adapter = CommitListAdapter(commitList) { commit ->
-                println("commit message was ${commit.message}")
 
                 val commitMessages : MutableList<String> = mutableListOf()
 
                 for (commitItem in commitList) {
-                    commitMessages.add(commitItem.message)
+                    if (commit.committerId == commitItem.committerId) {
+                        commitMessages.add(commitItem.message)
+                    }
                 }
 
                 val data = bundleOf(
@@ -66,23 +67,11 @@ class ViewCommitScreenFragment : Fragment() {
 
         binding.commitsRV.layoutManager = LinearLayoutManager(this.context)
 
-        /*binding.button.setOnClickListener {
-            viewModel.getCommits(viewModel.getRepositoryOwnerName(), viewModel.repository.value?.name ?: "")
-        }*/
-
         viewModel.getCommits(viewModel.getRepositoryOwnerName(), viewModel.repository.value?.name ?: "")
 
         return binding.root
 
         //return inflater.inflate(R.layout.view_commit_screen_fragment, container, false)
     }
-
-    /*override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-
-        *//*binding.button2.setOnClickListener {
-            findNavController().navigate(R.id.action_viewCommitScreenFragment_to_userScreenFragment)
-        }*//*
-    }*/
 
 }
