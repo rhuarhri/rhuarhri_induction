@@ -89,31 +89,18 @@ class SearchScreenFragment : Fragment() {
         }
     }
 
-    /*override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-
-
-        /*
-        recycler view set up
-        binding.searchResultRV.setHasFixedSize(true)
-        binding.searchResultRV.adapter = SearchListAdapter(viewModel.searchListResult) { name ->
-            println(name)
-        }
-
-        binding.searchResultRV.layoutManager = LinearLayoutManager(this.context)
-
-        binding.button.setOnClickListener {
-            viewModel.searchGithub()
-        }*/
-
-        /*binding.button.setOnClickListener {
-            findNavController().navigate(R.id.action_searchScreenFragment_to_viewCommitScreenFragment)
-        }*/
-    }*/
-
     fun onSearch(name : String) {
-        println("search for user with name of $name")
         viewModel.searchForUser(name)
+    }
+
+    fun onRefresh() {
+        val user = viewModel.userInfo.value
+        if (user != null) {
+            val name = user.name
+            if (name.isNotBlank()) {
+                viewModel.searchForUser(name)
+            }
+        }
     }
 
     fun onItemClicked(repository : Repository) {

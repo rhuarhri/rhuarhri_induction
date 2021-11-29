@@ -56,6 +56,10 @@ class RepoListFragment : Fragment() {
 
         binding.searchResultRV.layoutManager = LinearLayoutManager(this.context)
 
+        binding.searchResultListSRL.setOnRefreshListener {
+            (parentFragment as SearchScreenFragment?)?.onRefresh()
+        }
+
     }
 
     companion object {
@@ -66,9 +70,6 @@ class RepoListFragment : Fragment() {
             RepoListFragment().apply {
                 arguments = Bundle().apply {
                     putParcelableArrayList(searchResultKey, repoList)
-                    //putString(ARG_PARAM1, param1)
-                    //putString(ARG_PARAM2, param2)
-
                 }
             }
     }

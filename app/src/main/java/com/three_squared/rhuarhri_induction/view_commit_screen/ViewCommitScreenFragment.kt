@@ -67,7 +67,17 @@ class ViewCommitScreenFragment : Fragment() {
 
         binding.commitsRV.layoutManager = LinearLayoutManager(this.context)
 
-        viewModel.getCommits(viewModel.getRepositoryOwnerName(), viewModel.repository.value?.name ?: "")
+        viewModel.refreshCommits(viewModel.getRepositoryOwnerName(), viewModel.repository.value?.name ?: "")
+
+        val refreshingListObserver = Observer<Boolean> { refreshing ->
+            binding.commitListSRL.isRefreshing = refreshing
+        }
+
+        viewModel.refreshingList.observe(viewLifecycleOwner, refreshingListObserver)
+
+        binding.commitListSRL.setOnRefreshListener {
+            viewModel.refreshCommits(viewModel.getRepositoryOwnerName(), viewModel.repository.value?.name ?: "")
+        }
 
         return binding.root
 

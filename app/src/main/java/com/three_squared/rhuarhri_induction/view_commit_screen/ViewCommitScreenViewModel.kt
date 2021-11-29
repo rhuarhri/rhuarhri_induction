@@ -25,6 +25,10 @@ class ViewCommitScreenViewModel @Inject constructor(private val repo : ViewCommi
         MutableLiveData<List<Commit>>(listOf())
     }
 
+    val refreshingList : MutableLiveData<Boolean> by lazy {
+        MutableLiveData<Boolean>(true)
+    }
+
     private var repositoryOwnerName = ""
     fun getRepositoryOwnerName() : String {
         return repositoryOwnerName
@@ -42,15 +46,23 @@ class ViewCommitScreenViewModel @Inject constructor(private val repo : ViewCommi
         }
     }
 
-    fun getCommits(userName : String, repositoryName : String) {
+    private fun getCommits(userName : String, repositoryName : String) {
         if (commitList.value.isNullOrEmpty()) {
             viewModelScope.launch(Dispatchers.IO) {
                 val foundCommitList = repo.getCommits(userName, repositoryName)
                 withContext(Dispatchers.Main) {
                     commitList.value = foundCommitList
+                    refreshingList.value = false
                 }
             }
         }
+    }
+
+
+    fun refreshCommits(userName: String, repositoryName : String) {
+        refreshingList.value = true
+        commitList.value = listOf()
+        getCommits(userName, repositoryName)
     }
 
     /*override fun onCleared() {
