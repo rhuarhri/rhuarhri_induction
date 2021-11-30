@@ -74,7 +74,7 @@ class Dependencies {
     @Singleton
     @Provides
     fun provideViewCommitScreenRepository(@ApplicationContext app : Context) : ViewCommitScreenRepository {
-        return ViewCommitScreenRepository(provideQueryHandler(),
+        return ViewCommitScreenRepository(app, provideQueryHandler(),
             provideCommitCache(), provideConnectionChecker(app))
     }
 

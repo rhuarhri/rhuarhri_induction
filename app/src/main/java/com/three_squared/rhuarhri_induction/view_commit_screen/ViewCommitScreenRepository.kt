@@ -5,10 +5,12 @@ import com.three_squared.rhuarhri_induction.online.QueryHandler
 import com.three_squared.rhuarhri_induction.data.Commit
 import com.three_squared.rhuarhri_induction.online.ConnectionChecker
 import com.three_squared.rhuarhri_induction.online.ConnectionType
+import com.three_squared.rhuarhri_induction.storage.CacheUpdater
 import com.three_squared.rhuarhri_induction.storage.CommitCache
 import javax.inject.Inject
 
 class ViewCommitScreenRepository @Inject constructor(
+    private val context : Context,
     private val queryHandler: QueryHandler,
     private val commitCache : CommitCache,
     private val connectionChecker: ConnectionChecker){
@@ -20,7 +22,12 @@ class ViewCommitScreenRepository @Inject constructor(
                 //online only
                 val onlineCommits = queryHandler.getCommits(userName, repositoryName)
 
-                commitCache.update(onlineCommits)
+
+                if (onlineCommits.isNotEmpty()) {
+                    val updater = CacheUpdater(context)
+                    updater.updateCommits(onlineCommits)
+                }
+                //commitCache.update(onlineCommits)
 
                 return onlineCommits
             }
@@ -33,7 +40,11 @@ class ViewCommitScreenRepository @Inject constructor(
                 } else {
                     val onlineCommits = queryHandler.getCommits(userName, repositoryName)
 
-                    commitCache.update(onlineCommits)
+                    if (onlineCommits.isNotEmpty()) {
+                        val updater = CacheUpdater(context)
+                        updater.updateCommits(onlineCommits)
+                    }
+                    //commitCache.update(onlineCommits)
 
                     onlineCommits
                 }
@@ -47,7 +58,4 @@ class ViewCommitScreenRepository @Inject constructor(
 
     }
 
-    fun updateCommits(context: Context) {
-        commitCache.updateCacheWorker(context)
-    }
 }

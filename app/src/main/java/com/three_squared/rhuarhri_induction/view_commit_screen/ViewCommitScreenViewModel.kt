@@ -59,11 +59,6 @@ class ViewCommitScreenViewModel @Inject constructor(private val repo : ViewCommi
         }
     }
 
-    fun workManagerTest(context : Context) {
-        repo.updateCommits(context)
-    }
-
-
     fun refreshCommits(userName: String, repositoryName : String) {
         refreshingList.value = true
         commitList.value = listOf()
