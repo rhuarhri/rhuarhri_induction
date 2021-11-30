@@ -1,13 +1,16 @@
 package com.three_squared.rhuarhri_induction.search_screen
 
+import android.content.Context
 import com.three_squared.rhuarhri_induction.data.User
 import com.three_squared.rhuarhri_induction.online.ConnectionChecker
 import com.three_squared.rhuarhri_induction.online.ConnectionType
 import com.three_squared.rhuarhri_induction.online.QueryHandler
+import com.three_squared.rhuarhri_induction.storage.CacheUpdater
 import com.three_squared.rhuarhri_induction.storage.UserCache
 import javax.inject.Inject
 
 class SearchScreenRepository @Inject constructor(
+    private val context : Context,
     private val onlineQueryHandler: QueryHandler,
     private val connectionChecker: ConnectionChecker,
     private val userCache : UserCache
@@ -21,7 +24,9 @@ class SearchScreenRepository @Inject constructor(
                 val foundUser = onlineQueryHandler.getUser(userName)
 
                 if (foundUser.id.isNotBlank()) {
-                    userCache.update(listOf(foundUser))
+                    //userCache.update(listOf(foundUser))
+                    val updater = CacheUpdater(context)
+                    updater.updateUser(foundUser)
                 }
 
                 return foundUser
@@ -36,7 +41,9 @@ class SearchScreenRepository @Inject constructor(
                     val foundUser = onlineQueryHandler.getUser(userName)
 
                     if (foundUser.id.isNotBlank()) {
-                        userCache.update(listOf(foundUser))
+                        //userCache.update(listOf(foundUser))
+                        val updater = CacheUpdater(context)
+                        updater.updateUser(foundUser)
                     }
 
                     foundUser

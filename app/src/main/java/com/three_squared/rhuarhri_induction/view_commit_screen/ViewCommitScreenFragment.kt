@@ -79,6 +79,11 @@ class ViewCommitScreenFragment : Fragment() {
             viewModel.refreshCommits(viewModel.getRepositoryOwnerName(), viewModel.repository.value?.name ?: "")
         }
 
+        val context = this.context
+        if (context != null) {
+            viewModel.workManagerTest(context)
+        }
+
         return binding.root
 
         //return inflater.inflate(R.layout.view_commit_screen_fragment, container, false)

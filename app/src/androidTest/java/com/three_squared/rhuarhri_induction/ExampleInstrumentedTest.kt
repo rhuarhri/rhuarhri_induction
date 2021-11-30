@@ -5,10 +5,7 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.three_squared.rhuarhri_induction.data.Commit
 import com.three_squared.rhuarhri_induction.data.Repository
 import com.three_squared.rhuarhri_induction.data.User
-import com.three_squared.rhuarhri_induction.storage.CacheParent
-import com.three_squared.rhuarhri_induction.storage.CommitCache
-import com.three_squared.rhuarhri_induction.storage.RepositoryCache
-import com.three_squared.rhuarhri_induction.storage.UserCache
+import com.three_squared.rhuarhri_induction.storage.*
 import com.three_squared.rhuarhri_induction.storage.data.CacheHistory
 import io.realm.Realm
 import io.realm.RealmConfiguration
@@ -84,9 +81,13 @@ class RealmTests {
     @Test
     fun checkIfCacheValidTestOnEmptyDatabase() = runBlocking {
         //this should check the age of the cached data
-        val cacheParent = CacheParent<User>(testConfig!!)
+        //val cacheParent = CacheParent<User>(testConfig!!)
 
-        val result = cacheParent.hasCacheExpired()
+        //val result = cacheParent.hasCacheExpired()
+
+        val cacheHistory = CacheHistoryManager(testConfig!!)
+
+        val result = cacheHistory.hasExpired()
 
         //since that the cache and by extension realm does not contain any
         //data then the cache has not expired
@@ -95,13 +96,13 @@ class RealmTests {
     }
 
     @Test
-    fun checkIfCacheValid() = runBlocking {
+    fun checkIfCacheExpired() = runBlocking {
 
         val oldDate = LocalDate.now().minusDays(14)
 
-        val cacheParent = CacheParent<User>(testConfig!!)
+        //val cacheParent = CacheParent<User>(testConfig!!)
 
-        val realm = cacheParent.getInstance()
+        val realm = Realm.getInstance(testConfig!!)
 
         //oldDate was added to the database to represent when the cache was added
         realm.executeTransactionAwait { transaction ->
@@ -109,10 +110,33 @@ class RealmTests {
             transaction.insert(newCacheHistory)
         }
 
-        val result = cacheParent.hasCacheExpired()
+        val cacheHistory = CacheHistoryManager(testConfig!!)
+
+        val result = cacheHistory.hasExpired()//cacheParent.hasCacheExpired()
         //since oldDate is 14 days behind the current data the cache will have expired
 
         assertEquals("check cache expired with old date", true, result)
+    }
+
+    @Test
+    fun checkIfCachedHasNotExpired() = runBlocking {
+        val oldDate = LocalDate.now().minusDays(1)
+
+        //val cacheParent = CacheParent<User>(testConfig!!)
+
+        val realm = Realm.getInstance(testConfig!!)//cacheParent.getInstance()
+
+        //oldDate was added to the database to represent when the cache was added
+        realm.executeTransactionAwait { transaction ->
+            val newCacheHistory = CacheHistory(time = oldDate.toEpochDay())
+            transaction.insert(newCacheHistory)
+        }
+
+        val cacheHistory = CacheHistoryManager(testConfig!!)
+        val result = cacheHistory.hasExpired()//cacheParent.hasCacheExpired()
+        //since oldDate is 14 days behind the current data the cache will have expired
+
+        assertEquals("check cache expired with old date", false, result)
     }
 
     //user cache tests

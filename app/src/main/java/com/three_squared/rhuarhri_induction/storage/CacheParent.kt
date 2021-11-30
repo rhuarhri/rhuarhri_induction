@@ -10,7 +10,7 @@ const val cacheLife : Long = 2 //in days
 open class CacheParent<T>(private val realmConfig : RealmConfiguration) {
 
     fun getInstance() : Realm {
-        return Realm.getInstance(realmConfig)
+        return Realm.getInstance(DataBase().config)
     }
 
     suspend fun deleteAll() {

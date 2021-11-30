@@ -17,6 +17,8 @@ import com.three_squared.rhuarhri_induction.databinding.SearchScreenFragmentBind
 import com.three_squared.rhuarhri_induction.search_screen.search_screen_child_fragments.RepoListFragment
 import com.three_squared.rhuarhri_induction.search_screen.search_screen_child_fragments.RepositoryParcelable
 import com.three_squared.rhuarhri_induction.search_screen.search_screen_child_fragments.SearchFragment
+import com.three_squared.rhuarhri_induction.storage.CacheUpdater
+import com.three_squared.rhuarhri_induction.storage.Updater
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

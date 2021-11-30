@@ -1,5 +1,6 @@
 package com.three_squared.rhuarhri_induction.view_commit_screen
 
+import android.content.Context
 import com.three_squared.rhuarhri_induction.online.QueryHandler
 import com.three_squared.rhuarhri_induction.data.Commit
 import com.three_squared.rhuarhri_induction.online.ConnectionChecker
@@ -44,5 +45,9 @@ class ViewCommitScreenRepository @Inject constructor(
             }
         }
 
+    }
+
+    fun updateCommits(context: Context) {
+        commitCache.updateCacheWorker(context)
     }
 }
