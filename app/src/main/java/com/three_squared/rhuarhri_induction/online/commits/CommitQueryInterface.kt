@@ -8,6 +8,7 @@ import retrofit2.http.Path
 
 interface CommitQueryInterface {
 
+    //githubToken is not available in this public repository for security reasons
     @Headers("Authorization: token $githubToken")
     @GET("repos/{name}/{repository}/commits")
     fun getCommits(@Path(value = "name") name : String,

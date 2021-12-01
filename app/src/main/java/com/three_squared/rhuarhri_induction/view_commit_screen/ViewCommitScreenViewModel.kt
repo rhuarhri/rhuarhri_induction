@@ -1,6 +1,5 @@
 package com.three_squared.rhuarhri_induction.view_commit_screen
 
-import android.content.Context
 import android.os.Bundle
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -64,10 +63,4 @@ class ViewCommitScreenViewModel @Inject constructor(private val repo : ViewCommi
         commitList.value = listOf()
         getCommits(userName, repositoryName)
     }
-
-    /*override fun onCleared() {
-        super.onCleared()
-
-        repo.commitList.value = listOf()
-    }*/
 }

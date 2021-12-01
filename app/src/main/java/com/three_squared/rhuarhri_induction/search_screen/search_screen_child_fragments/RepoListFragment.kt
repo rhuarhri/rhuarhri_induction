@@ -26,17 +26,10 @@ class RepoListFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
 
         binding = FragmentRepoListBinding.inflate(inflater, container, false)
 
-        return binding.root
-        // Inflate the layout for this fragment
-        //return inflater.inflate(R.layout.fragment_repo_list, container, false)
-    }
-
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
         //recycler view set up
         binding.searchResultRV.setHasFixedSize(true)
 
@@ -45,7 +38,7 @@ class RepoListFragment : Fragment() {
             if (parcelableRepo.id != null && parcelableRepo.name != null
                 && parcelableRepo.visibility != null && parcelableRepo.description != null) {
                 val foundRepository = Repository(parcelableRepo.id, parcelableRepo.name,
-                parcelableRepo.visibility, parcelableRepo.description)
+                    parcelableRepo.visibility, parcelableRepo.description)
                 displayedRepoList.add(foundRepository)
             }
         }
@@ -60,6 +53,7 @@ class RepoListFragment : Fragment() {
             (parentFragment as SearchScreenFragment?)?.onRefresh()
         }
 
+        return binding.root
     }
 
     companion object {

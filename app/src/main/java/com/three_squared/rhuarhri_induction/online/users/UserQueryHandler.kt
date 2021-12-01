@@ -19,7 +19,7 @@ class UserQueryHandler constructor(private val retroFit : Retrofit) {
                 User("","","","", listOf())
             }
         } catch (e : Exception) {
-            println("error was $e")
+            println("UserQueryHandle error was $e")
             User("","","","", listOf())
         }
     }

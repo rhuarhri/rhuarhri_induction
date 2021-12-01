@@ -1,5 +1,6 @@
 package com.three_squared.rhuarhri_induction.storage
 
+/*
 import io.realm.Realm
 import io.realm.RealmConfiguration
 
@@ -17,4 +18,4 @@ class DataBase {
 
         realm.commitTransaction()
     }
-}
+}*/

@@ -40,8 +40,8 @@ class CacheHistoryManager(private val config: RealmConfiguration) {
         val realm = Realm.getInstance(config)
 
         realm.beginTransaction()
-        //ensure history is clear
-        realm.delete(CacheHistory::class.java)
+        //ensure database is clear
+        realm.deleteAll()
 
         val currentTime = LocalDate.now().toEpochDay()
         val newHistory = CacheHistory(time = currentTime)

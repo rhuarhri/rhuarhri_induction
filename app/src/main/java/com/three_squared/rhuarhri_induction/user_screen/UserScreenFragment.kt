@@ -19,7 +19,6 @@ import com.three_squared.rhuarhri_induction.databinding.UserScreenFragmentBindin
 class UserScreenFragment : Fragment() {
 
     private lateinit var binding: UserScreenFragmentBinding
-    //private lateinit var viewModel: UserScreenViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -64,35 +63,6 @@ class UserScreenFragment : Fragment() {
         viewModel.setup(arguments)
 
         return binding.root
-
-        //return inflater.inflate(R.layout.user_screen_fragment, container, false)
     }
-
-    /*override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProvider(this).get(UserScreenViewModel::class.java)
-
-        binding.viewmodel = viewModel
-
-    }*/
-
-    /*fun toUserSearchScreen(user : User) {
-        val data = bundleOf(
-            "id" to user.id,
-            "name" to user.name
-        )
-
-        findNavController().navigate(R.id.action_userScreenFragment_to_searchScreenFragment, data)
-    }*/
-
-    /*fun toCommitScreen(repository : Repository) {
-        val data = bundleOf(
-            "id" to repository.id,
-            "name" to repository.name,
-            "description" to repository.description,
-            "visibility" to repository.visibility
-        )
-        findNavController().navigate(R.id.action_searchScreenFragment_to_viewCommitScreenFragment, data)
-    }*/
 
 }

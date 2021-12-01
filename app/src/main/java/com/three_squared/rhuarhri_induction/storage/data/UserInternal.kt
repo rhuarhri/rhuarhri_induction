@@ -7,7 +7,6 @@ import io.realm.annotations.Required
 
 open class UserInternal (
     @PrimaryKey
-    //var primaryKey : String = ObjectId().toHexString(), //TODO remove primary key
     @Required
     var id : String = "",
     @Required

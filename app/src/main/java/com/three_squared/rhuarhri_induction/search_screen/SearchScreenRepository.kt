@@ -24,7 +24,6 @@ class SearchScreenRepository @Inject constructor(
                 val foundUser = onlineQueryHandler.getUser(userName)
 
                 if (foundUser.id.isNotBlank()) {
-                    //userCache.update(listOf(foundUser))
                     val updater = CacheUpdater(context)
                     updater.updateUser(foundUser)
                 }
@@ -41,7 +40,6 @@ class SearchScreenRepository @Inject constructor(
                     val foundUser = onlineQueryHandler.getUser(userName)
 
                     if (foundUser.id.isNotBlank()) {
-                        //userCache.update(listOf(foundUser))
                         val updater = CacheUpdater(context)
                         updater.updateUser(foundUser)
                     }

@@ -7,6 +7,7 @@ import com.squareup.moshi.JsonAdapter
 import com.squareup.moshi.Moshi
 import com.three_squared.rhuarhri_induction.data.Repository
 import com.three_squared.rhuarhri_induction.data.User
+import com.three_squared.rhuarhri_induction.dependency_injection.Dependencies
 import com.three_squared.rhuarhri_induction.storage.data.RepositoryInternal
 import com.three_squared.rhuarhri_induction.storage.data.UserInternal
 import io.realm.Realm
@@ -197,13 +198,14 @@ class UserCache @Inject constructor(private val realmConfig : RealmConfiguration
     }*/
 }
 
+const val UserCacheUpdaterKey = "userJson"
 class UserCacheUpdater(context: Context, params: WorkerParameters) : Worker(context, params) {
     override fun doWork(): Result {
 
         val moshi = Moshi.Builder().build()
         val adapter : JsonAdapter<User> = moshi.adapter(User::class.java)
 
-        val json = inputData.getString("userJson")
+        val json = inputData.getString(UserCacheUpdaterKey)
         if (json != null) {
             val newUserInfo = adapter.fromJson(json)
 
@@ -211,7 +213,7 @@ class UserCacheUpdater(context: Context, params: WorkerParameters) : Worker(cont
                 println("input id is ${newUserInfo.id}")
                 println("input name is ${newUserInfo.name}")
 
-                val userCache = UserCache(DataBase().config)
+                val userCache = UserCache(Dependencies().providesRealmConfig())
                 userCache.add(newUserInfo)
 
                 val savedUser = userCache.get(newUserInfo.id)

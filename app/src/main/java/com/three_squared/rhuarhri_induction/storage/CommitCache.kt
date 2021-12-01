@@ -5,15 +5,14 @@ import androidx.work.*
 import com.squareup.moshi.JsonAdapter
 import com.squareup.moshi.Moshi
 import com.three_squared.rhuarhri_induction.data.Commit
-import com.three_squared.rhuarhri_induction.data.User
-import com.three_squared.rhuarhri_induction.storage.data.CacheHistory
+import com.three_squared.rhuarhri_induction.dependency_injection.Dependencies
 import com.three_squared.rhuarhri_induction.storage.data.CommitInternal
 import io.realm.Realm
 import io.realm.RealmConfiguration
 import io.realm.kotlin.executeTransactionAwait
 import javax.inject.Inject
 
-class CommitCache @Inject constructor(private val realmConfig : RealmConfiguration) /*: CacheParent<Commit>(realmConfig)*/ {
+class CommitCache @Inject constructor(private val realmConfig : RealmConfiguration) {
     fun add(commit : Commit) {
 
         val foundCommit = getById(commit.commitId)
@@ -25,16 +24,13 @@ class CommitCache @Inject constructor(private val realmConfig : RealmConfigurati
             realm.beginTransaction()
             realm.insert(commitInternal)
             realm.commitTransaction()
-            /*realm.executeTransactionAwait { transaction ->
-                transaction.insert(commitInternal)
-            }*/
         } else {
             updateCommit(commit.commitId, commit)
         }
     }
 
     private fun updateCommit(id : String, commit : Commit) {
-        val realm = Realm.getInstance(realmConfig)//super.getInstance()
+        val realm = Realm.getInstance(realmConfig)
 
         realm.beginTransaction()
         val foundCommit = realm.where(CommitInternal::class.java).equalTo("id", id).findFirst()
@@ -46,24 +42,12 @@ class CommitCache @Inject constructor(private val realmConfig : RealmConfigurati
             foundCommit.repositoryName = commit.repositoryName
         }
         realm.commitTransaction()
-
-        /*realm.executeTransactionAwait { transaction ->
-            val foundCommit = transaction.where(CommitInternal::class.java).equalTo("id", id).findFirst()
-
-            if (foundCommit != null) {
-                foundCommit.committerId = commit.committerId
-                foundCommit.committerName = commit.committerName
-                foundCommit.committerAvatar = commit.committerAvatar
-                foundCommit.message = commit.message
-                foundCommit.repositoryName = commit.repositoryName
-            }
-        }*/
     }
 
     fun getById(id : String) : Commit? {
         var commit : Commit? = null
 
-        val realm = Realm.getInstance(realmConfig)//super.getInstance()
+        val realm = Realm.getInstance(realmConfig)
         realm.beginTransaction()
         val foundCommit = realm.where(CommitInternal::class.java).equalTo("id", id).findFirst()
         realm.commitTransaction()
@@ -79,28 +63,13 @@ class CommitCache @Inject constructor(private val realmConfig : RealmConfigurati
             )
         }
 
-        /*realm.executeTransactionAwait { transaction ->
-            val foundCommit = transaction.where(CommitInternal::class.java).equalTo("id", id).findFirst()
-
-            if (foundCommit != null) {
-                commit = Commit(
-                    foundCommit.id,
-                    foundCommit.committerName,
-                    foundCommit.committerId,
-                    foundCommit.committerAvatar,
-                    foundCommit.message,
-                    foundCommit.repositoryName
-                )
-            }
-        }*/
-
         return commit
     }
 
     suspend fun getByRepositoryName(name : String) : List<Commit> {
         val commitList = mutableListOf<Commit>()
 
-        val realm = Realm.getInstance(realmConfig)//super.getInstance()
+        val realm = Realm.getInstance(realmConfig)
         realm.executeTransactionAwait { transaction ->
             val foundCommits = transaction.where(CommitInternal::class.java)
                 .equalTo("repositoryName", name).findAll()
@@ -119,26 +88,16 @@ class CommitCache @Inject constructor(private val realmConfig : RealmConfigurati
 
         return commitList
     }
-
-    /*suspend fun update(commits : List<Commit>) {
-        val expired = super.hasCacheExpired()
-        if (expired) {
-            super.deleteAll()
-        }
-
-        for (commit in commits) {
-            add(commit)
-        }
-    }*/
 }
 
+const val CommitCacheUpdaterKey = "commitJson"
 class CommitCacheUpdater(context: Context, params: WorkerParameters) : Worker(context, params) {
     override fun doWork(): Result {
 
         val moshi = Moshi.Builder().build()
         val adapter : JsonAdapter<Commit> = moshi.adapter(Commit::class.java)
 
-        val commitJsonList = inputData.getStringArray("commitJson")
+        val commitJsonList = inputData.getStringArray(CommitCacheUpdaterKey)
 
         val commitList = mutableListOf<Commit>()
 
@@ -151,13 +110,12 @@ class CommitCacheUpdater(context: Context, params: WorkerParameters) : Worker(co
             }
         }
 
-        val commitCache = CommitCache(DataBase().config)
+        val commitCache = CommitCache(Dependencies().providesRealmConfig())
         for (commit in commitList) {
             commitCache.add(commit)
         }
 
         return Result.success()
     }
-
 
 }

@@ -3,20 +3,19 @@ package com.three_squared.rhuarhri_induction.storage
 import android.content.Context
 import androidx.work.Worker
 import androidx.work.WorkerParameters
+import com.three_squared.rhuarhri_induction.dependency_injection.Dependencies
 import java.lang.Exception
 
 class CacheHistoryWorker(context: Context, params: WorkerParameters) : Worker(context, params) {
 
     override fun doWork(): Result {
 
-        val dataBase = DataBase()
-        val historyManager = CacheHistoryManager(dataBase.config)
+        val historyManager = CacheHistoryManager(Dependencies().providesRealmConfig())
 
         return try {
             val hasCacheExpired = historyManager.hasExpired()
 
             if (hasCacheExpired) {
-                dataBase.deleteDataBase()
                 historyManager.reset()
             }
 
@@ -28,21 +27,3 @@ class CacheHistoryWorker(context: Context, params: WorkerParameters) : Worker(co
     }
 
 }
-
-
-/*class HasCacheExpiredWorker(context: Context, params: WorkerParameters) : Worker(context, params) {
-    override fun doWork(): Result {
-
-
-
-        return Result.success()
-    }
-}
-
-class UpdateHistoryWorker(context: Context, params: WorkerParameters) : Worker(context, params) {
-    override fun doWork(): Result {
-
-        return Result.success()
-    }
-
-}*/

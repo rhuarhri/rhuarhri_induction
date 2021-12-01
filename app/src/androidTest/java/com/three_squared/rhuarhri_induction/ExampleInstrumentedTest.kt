@@ -77,14 +77,10 @@ class RealmTests {
         testConfig = RealmConfiguration.Builder().inMemory().name("test-realm").build()
     }
 
-    //parent / abstract cache tests
+    //history cache tests
     @Test
     fun checkIfCacheValidTestOnEmptyDatabase() = runBlocking {
         //this should check the age of the cached data
-        //val cacheParent = CacheParent<User>(testConfig!!)
-
-        //val result = cacheParent.hasCacheExpired()
-
         val cacheHistory = CacheHistoryManager(testConfig!!)
 
         val result = cacheHistory.hasExpired()
@@ -100,8 +96,6 @@ class RealmTests {
 
         val oldDate = LocalDate.now().minusDays(14)
 
-        //val cacheParent = CacheParent<User>(testConfig!!)
-
         val realm = Realm.getInstance(testConfig!!)
 
         //oldDate was added to the database to represent when the cache was added
@@ -112,7 +106,7 @@ class RealmTests {
 
         val cacheHistory = CacheHistoryManager(testConfig!!)
 
-        val result = cacheHistory.hasExpired()//cacheParent.hasCacheExpired()
+        val result = cacheHistory.hasExpired()
         //since oldDate is 14 days behind the current data the cache will have expired
 
         assertEquals("check cache expired with old date", true, result)
@@ -122,9 +116,7 @@ class RealmTests {
     fun checkIfCachedHasNotExpired() = runBlocking {
         val oldDate = LocalDate.now().minusDays(1)
 
-        //val cacheParent = CacheParent<User>(testConfig!!)
-
-        val realm = Realm.getInstance(testConfig!!)//cacheParent.getInstance()
+        val realm = Realm.getInstance(testConfig!!)
 
         //oldDate was added to the database to represent when the cache was added
         realm.executeTransactionAwait { transaction ->
@@ -133,12 +125,29 @@ class RealmTests {
         }
 
         val cacheHistory = CacheHistoryManager(testConfig!!)
-        val result = cacheHistory.hasExpired()//cacheParent.hasCacheExpired()
+        val result = cacheHistory.hasExpired()
         //since oldDate is 14 days behind the current data the cache will have expired
 
         assertEquals("check cache expired with old date", false, result)
     }
 
+    @Test
+    fun checkDataBaseReset() = runBlocking {
+        val userCache = UserCache(testConfig!!)
+
+        for (data in dummyUserData) {
+            userCache.add(data)
+        }
+
+        val cacheHistory = CacheHistoryManager(testConfig!!)
+        cacheHistory.reset()
+
+        //the database should now be empty
+        val users = userCache.getByName("Sam")
+        assertEquals("check that database is empty", 0, users.size)
+    }
+
+    //end of cache history tests
     //user cache tests
 
     @Test
@@ -219,11 +228,6 @@ class RealmTests {
         assertEquals("check name change", newName, foundRepository!!.name)
         assertEquals("check visibility change", newVisibility, foundRepository.visibility)
         assertEquals("check description changed", newDescription, foundRepository.description)
-    }
-
-    @Test
-    fun getRepositoriesTest() = runBlocking {
-
     }
 
     //end of repository cache test

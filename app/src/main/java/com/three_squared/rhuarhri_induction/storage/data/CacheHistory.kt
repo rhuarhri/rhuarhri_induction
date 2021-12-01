@@ -6,6 +6,6 @@ import org.bson.types.ObjectId
 
 open class CacheHistory (
     @PrimaryKey
-    var primaryKey : String = ObjectId().toHexString(),//TODO remove primary key
+    var primaryKey : String = ObjectId().toHexString(),
     var time : Long = 0,
 ) : RealmObject()

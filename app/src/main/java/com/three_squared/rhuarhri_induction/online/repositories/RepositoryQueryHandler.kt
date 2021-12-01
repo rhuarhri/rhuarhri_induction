@@ -30,7 +30,7 @@ class RepositoryQueryHandler constructor(private val retroFit : Retrofit) {
                 return listOf()
             }
         } catch (e : Exception) {
-            println("error was $e")
+            println("RepositoryQueryHandler error was $e")
             return listOf()
         }
     }

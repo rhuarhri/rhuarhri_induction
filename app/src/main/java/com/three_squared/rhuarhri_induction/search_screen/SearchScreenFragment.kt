@@ -54,8 +54,6 @@ class SearchScreenFragment : Fragment() {
         viewModel.repositoryList.observe(viewLifecycleOwner, repoListObserver)
 
         return binding.root
-
-        //return inflater.inflate(R.layout.search_screen_fragment, container, false)
     }
 
     private fun setupSearchFragment(name : String, avatarUrl : String) {
@@ -107,10 +105,6 @@ class SearchScreenFragment : Fragment() {
     fun onItemClicked(repository : Repository) {
 
         val userName : String = viewModel.userInfo.value?.name ?: ""
-
-        println("user name is $userName")
-        println("repository id ${repository.id}")
-        println("repository name ${repository.name}")
 
         val data = bundleOf(
             "ownerName" to userName,

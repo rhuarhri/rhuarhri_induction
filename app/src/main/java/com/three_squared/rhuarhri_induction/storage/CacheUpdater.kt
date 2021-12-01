@@ -7,12 +7,17 @@ import com.squareup.moshi.Moshi
 import com.three_squared.rhuarhri_induction.data.Commit
 import com.three_squared.rhuarhri_induction.data.User
 
-class CacheUpdater(private val context: Context) {
+const val TAG = "cacheUpdater"
+class CacheUpdater(context: Context) {
+
+    /*
+    In most cases the app uses coroutines to handle multi-threading but here
+    it is using work manager. The main reason work manager is used is that
+    ensures that the work gets completed, even if the app is closed.
+     */
 
     private val workManger = WorkManager.getInstance(context)
     private val constraints = Constraints.Builder().setRequiresBatteryNotLow(true).build()
-
-    val TAG = "cacheUpdater"
 
     private fun updateHistory() : WorkContinuation {
         val workRequest = OneTimeWorkRequestBuilder<CacheHistoryWorker>().setConstraints(constraints).build()
@@ -24,7 +29,7 @@ class CacheUpdater(private val context: Context) {
         val moshi = Moshi.Builder().build()
         val userAdapter : JsonAdapter<User> = moshi.adapter(User::class.java)
 
-        val data = Data.Builder().putString("userJson", userAdapter.toJson(user)).build()
+        val data = Data.Builder().putString(UserCacheUpdaterKey, userAdapter.toJson(user)).build()
 
         val workRequest = OneTimeWorkRequestBuilder<UserCacheUpdater>().setConstraints(constraints).setInputData(data).build()
 
@@ -45,7 +50,7 @@ class CacheUpdater(private val context: Context) {
             commitJsonList.add(commitJson)
         }
 
-        val data = Data.Builder().putStringArray("commitJson", commitJsonList.toTypedArray()).build()
+        val data = Data.Builder().putStringArray(CommitCacheUpdaterKey, commitJsonList.toTypedArray()).build()
 
         val workRequest = OneTimeWorkRequestBuilder<CommitCacheUpdater>().setConstraints(constraints).setInputData(data).build()
 

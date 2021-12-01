@@ -2,11 +2,12 @@ package com.three_squared.rhuarhri_induction.storage
 
 import com.three_squared.rhuarhri_induction.data.Repository
 import com.three_squared.rhuarhri_induction.storage.data.RepositoryInternal
+import io.realm.Realm
 import io.realm.RealmConfiguration
 import io.realm.kotlin.executeTransactionAwait
 import javax.inject.Inject
 
-class RepositoryCache @Inject constructor(realmConfig : RealmConfiguration) : CacheParent<Repository>(realmConfig) {
+class RepositoryCache @Inject constructor(private val realmConfig : RealmConfiguration) {
     suspend fun add(repository : Repository) {
 
 
@@ -15,7 +16,7 @@ class RepositoryCache @Inject constructor(realmConfig : RealmConfiguration) : Ca
 
         val foundRepository = getById(repository.id)
 
-        val realm = super.getInstance()
+        val realm = Realm.getInstance(realmConfig)
         realm.executeTransactionAwait { transaction ->
             if (foundRepository == null) {
                 transaction.insert(repositoryInternal)
@@ -28,7 +29,7 @@ class RepositoryCache @Inject constructor(realmConfig : RealmConfiguration) : Ca
     }
 
     private suspend fun updateRepository(id : String, repository: Repository) {
-        val realm = super.getInstance()
+        val realm = Realm.getInstance(realmConfig)
         realm.executeTransactionAwait { transaction ->
             val foundRepositoryInternal = transaction.where(RepositoryInternal::class.java)
                 .equalTo("id", id)
@@ -45,7 +46,7 @@ class RepositoryCache @Inject constructor(realmConfig : RealmConfiguration) : Ca
     suspend fun getById(id : String) : Repository? {
         var foundRepository : Repository? = null
 
-        val realm = super.getInstance()
+        val realm = Realm.getInstance(realmConfig)
         realm.executeTransactionAwait { transaction ->
             val foundRepositoryInternal = transaction.where(RepositoryInternal::class.java)
                 .equalTo("id", id)
@@ -61,7 +62,7 @@ class RepositoryCache @Inject constructor(realmConfig : RealmConfiguration) : Ca
     suspend fun get(): List<Repository> {
         val repoList = mutableListOf<Repository>()
 
-        val realm = super.getInstance()
+        val realm = Realm.getInstance(realmConfig)
         realm.executeTransactionAwait { transaction ->
             repoList.addAll(transaction.where(RepositoryInternal::class.java).findAll().map {
                 mapToRepository(it)

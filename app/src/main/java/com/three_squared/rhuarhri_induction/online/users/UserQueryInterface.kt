@@ -8,6 +8,7 @@ import retrofit2.http.Path
 
 interface UserQueryInterface {
 
+    //githubToken is not available in this public repository for security reasons
     @Headers("Authorization: token $githubToken")
     @GET("users/{name}")
     fun getUser(@Path(value = "name") name : String): Call<OnlineUser>
