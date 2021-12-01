@@ -261,3 +261,145 @@ class RealmTests {
     }
     //end of commit cache test
 }
+
+/*@RunWith(AndroidJUnit4::class)
+class ClearCacheWorkManagerTest {
+    private val appContext = InstrumentationRegistry.getInstrumentation().targetContext
+    private val user = User("1", "repoURL", "Dave", "avatar", listOf())
+
+    @Before
+    fun setup() {
+        setupRealmDataBase()
+    }
+
+    private fun setupRealmDataBase() = runBlocking {
+
+    }
+
+    @Test
+    fun workerTest() {
+        Realm.init(appContext)
+        val config = Dependencies().providesRealmConfig()
+        val oldDate = LocalDate.now().minusDays(14)
+        val userCache = UserCache(config)
+
+        runBlocking {
+            val realm = Realm.getInstance(config)
+            realm.executeTransactionAwait { transaction ->
+                val newCacheHistory = CacheHistory(time = oldDate.toEpochDay())
+                transaction.insert(newCacheHistory)
+            }
+
+            userCache.add(user)
+        }
+
+        *//*
+        There are tests for the cache history, however this worker has to
+        1 check the cache has not expired
+        2 clear the cache if it has expired
+        3 reset the database
+        hence why it is being tested here
+         *//*
+
+        val worker = TestWorkerBuilder<CacheHistoryWorker>(appContext, newSingleThreadExecutor()).build()
+
+        val result = worker.doWork()
+
+        val isSuccess = result is ListenableWorker.Result.Success
+
+        assertEquals("checking if work success", true, isSuccess)
+
+        //checking if original data has been removed
+        runBlocking {
+
+            val foundUser = userCache.get(user.id)
+
+            assertEquals("check database has been cleared", null, foundUser)
+        }
+    }
+
+}
+
+@RunWith(AndroidJUnit4::class)
+class WorkManagerTests {
+
+    private val appContext = InstrumentationRegistry.getInstrumentation().targetContext
+    private lateinit var inputData : Data
+
+    @Before
+    fun setup() {
+        Realm.init(appContext)
+        val testData = TestData("Jack", "1")
+        val moshi = Moshi.Builder().build()
+        val adapter : JsonAdapter<TestData> = moshi.adapter(TestData::class.java)
+        val json = adapter.toJson(testData)
+        inputData = Data.Builder().putString(key, json).build()
+    }
+
+    @Test
+    fun testWorkManager() {
+        val worker = TestWorkerBuilder<ExampleWorker>(appContext, newSingleThreadExecutor(), inputData).build()
+
+        val result = worker.doWork()
+
+        val isSuccess = result is ListenableWorker.Result.Success
+
+        assertEquals("checking if work success", true, isSuccess)
+    }
+
+}
+
+data class TestData(
+    val name : String,
+    val id : String,
+)
+
+const val key = "dataKey"
+class ExampleWorker(context: Context, parameters: WorkerParameters) : Worker(context, parameters) {
+    override fun doWork(): Result {
+        val moshi = Moshi.Builder().build()
+        val adapter : JsonAdapter<TestData> = moshi.adapter(TestData::class.java)
+
+        val json = inputData.getString(key) ?: return Result.failure()
+
+        val data = adapter.fromJson(json) ?: return Result.failure()
+
+        println("data id is ${data.id}")
+        println("data name is ${data.name}")
+
+        if (data.id == "2") {
+            return Result.failure()
+        }
+
+        if(data.name == "Fred") {
+            return Result.failure()
+        }
+
+        try {
+            val config = RealmConfiguration.Builder()
+                .schemaVersion(1)
+                .build()
+
+            val realm = Realm.getInstance(config)
+
+            realm.beginTransaction()
+            realm.insert(TestDataInternal(name = data.name, id = data.id))
+            realm.commitTransaction()
+
+        } catch(e : Exception) {
+            println("realm error is $e")
+            return Result.failure()
+        }
+
+
+        return Result.success()
+    }
+
+}
+
+open class TestDataInternal (
+    @PrimaryKey
+    var primaryKey : String = ObjectId().toHexString(),
+    var name : String = "",
+    var id : String = ""
+) : RealmObject()*/

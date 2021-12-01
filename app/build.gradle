@@ -1,10 +1,10 @@
 plugins {
+    id 'kotlin-kapt'
     id 'com.android.application'
     id 'kotlin-android'
-    id 'kotlin-kapt'
-    id 'realm-android'
     id 'dagger.hilt.android.plugin'
     id 'androidx.navigation.safeargs.kotlin'
+    id 'realm-android'
 }
 
 android {
@@ -101,6 +101,7 @@ dependencies {
 
     //work manager
     implementation "androidx.work:work-runtime-ktx:$work_manager_version"
+    androidTestImplementation "androidx.work:work-testing:$work_manager_version"
 
     //Testing
     testImplementation "junit:junit:$junit_version"

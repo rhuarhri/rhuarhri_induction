@@ -82,7 +82,9 @@ class Dependencies {
     @Provides
     fun providesRealmConfig() : RealmConfiguration {
         return RealmConfiguration.Builder()
+            .name("mainDB")
             .schemaVersion(1)
+            .deleteRealmIfMigrationNeeded()
             .build()
     }
 }
