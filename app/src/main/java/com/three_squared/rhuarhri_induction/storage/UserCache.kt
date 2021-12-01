@@ -15,7 +15,7 @@ import io.realm.RealmList
 import io.realm.kotlin.executeTransactionAwait
 import javax.inject.Inject
 
-class UserCache @Inject constructor(private val realmConfig : RealmConfiguration) : CacheParent<User>(realmConfig) {
+class UserCache @Inject constructor(private val realmConfig : RealmConfiguration) /*: CacheParent<User>(realmConfig)*/ {
 
     fun add(user: User) {
 
@@ -33,6 +33,7 @@ class UserCache @Inject constructor(private val realmConfig : RealmConfiguration
         val foundUser = get(user.id)
 
         if (foundUser == null) {
+            println("user cache adding user with name of ${userInternal.name}")
             val realm = Realm.getInstance(realmConfig)//super.getInstance()
             realm.beginTransaction()
             realm.insert(userInternal)
@@ -46,6 +47,7 @@ class UserCache @Inject constructor(private val realmConfig : RealmConfiguration
         }*/
 
         if (foundUser != null) {
+            println("user cache updating user")
             updateInternalUser(user.id, user)
         }
     }
@@ -152,7 +154,7 @@ class UserCache @Inject constructor(private val realmConfig : RealmConfiguration
     suspend fun getByName(userName : String) : List<User> {
         val foundUsers = mutableListOf<User>()
 
-        val realm = super.getInstance()
+        val realm = Realm.getInstance(realmConfig)//super.getInstance()
         realm.executeTransactionAwait { transaction ->
             foundUsers.addAll(transaction.where(UserInternal::class.java).equalTo("name", userName).findAll().map {
                 mapToUser(it)

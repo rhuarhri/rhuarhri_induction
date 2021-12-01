@@ -140,6 +140,7 @@ class RealmTests {
     }
 
     //user cache tests
+
     @Test
     fun testSearch() = runBlocking {
 
@@ -151,6 +152,7 @@ class RealmTests {
 
         val expectedName = "Sam"
 
+        println("getting user's by name")
         val foundUsers = userCache.getByName(expectedName)
 
         assertEquals("check result size", 1, foundUsers.size)

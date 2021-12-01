@@ -13,7 +13,7 @@ import io.realm.RealmConfiguration
 import io.realm.kotlin.executeTransactionAwait
 import javax.inject.Inject
 
-class CommitCache @Inject constructor(private val realmConfig : RealmConfiguration) : CacheParent<Commit>(realmConfig) {
+class CommitCache @Inject constructor(private val realmConfig : RealmConfiguration) /*: CacheParent<Commit>(realmConfig)*/ {
     fun add(commit : Commit) {
 
         val foundCommit = getById(commit.commitId)
@@ -100,7 +100,7 @@ class CommitCache @Inject constructor(private val realmConfig : RealmConfigurati
     suspend fun getByRepositoryName(name : String) : List<Commit> {
         val commitList = mutableListOf<Commit>()
 
-        val realm = super.getInstance()
+        val realm = Realm.getInstance(realmConfig)//super.getInstance()
         realm.executeTransactionAwait { transaction ->
             val foundCommits = transaction.where(CommitInternal::class.java)
                 .equalTo("repositoryName", name).findAll()
