@@ -26,6 +26,7 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
+
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
@@ -36,6 +37,26 @@ android {
 
     buildFeatures {
         dataBinding true
+    }
+
+    flavorDimensions 'enviroment'
+    productFlavors {
+        development {
+            dimension 'enviroment'
+            applicationIdSuffix '.development'
+        }
+        qa {
+            dimension 'enviroment'
+            applicationIdSuffix '.qa'
+        }
+        uat {
+            dimension 'enviroment'
+            applicationIdSuffix '.uat'
+        }
+        live {
+            dimension 'enviroment'
+            applicationIdSuffix '.live'
+        }
     }
 }
 
