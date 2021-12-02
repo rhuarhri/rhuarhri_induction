@@ -47,6 +47,8 @@ class UserScreenFragment : Fragment() {
 
         viewModel.commitList.observe(viewLifecycleOwner, commitListObserver)
 
+        binding.userCommitListRV.layoutManager = LinearLayoutManager(this.context)
+
         binding.seeRepoBTN.setOnClickListener {
             val user = viewModel.user.value ?: User("","","", "", listOf())
 
@@ -57,8 +59,6 @@ class UserScreenFragment : Fragment() {
 
             findNavController().navigate(R.id.action_userScreenFragment_to_searchScreenFragment, data)
         }
-
-        binding.userCommitListRV.layoutManager = LinearLayoutManager(this.context)
 
         viewModel.setup(arguments)
 

@@ -24,6 +24,11 @@ class CacheUpdater(context: Context) {
         return workManger.beginUniqueWork(TAG, ExistingWorkPolicy.APPEND, workRequest)
     }
 
+    /* why no repository updater?
+    this is because the user data class has a list of repositories as a variable
+    so when the user is updated so will be that user's list of repositories
+     */
+
     fun updateUser(user : User) {
 
         val moshi = Moshi.Builder().build()

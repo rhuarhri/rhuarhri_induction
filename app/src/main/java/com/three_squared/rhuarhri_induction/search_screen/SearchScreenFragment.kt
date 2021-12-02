@@ -57,6 +57,9 @@ class SearchScreenFragment : Fragment() {
     }
 
     private fun setupSearchFragment(name : String, avatarUrl : String) {
+        /*replace the search bar with new search bar instance containing the
+        new information
+         */
         val searchFragment = SearchFragment.newInstance(name, avatarUrl)
 
         val fragmentManger : FragmentManager = this.childFragmentManager
@@ -67,6 +70,9 @@ class SearchScreenFragment : Fragment() {
     }
 
     private fun setupRepoList(repositories: List<Repository>) {
+        /*replace the repository list with new repository list instance containing the
+        new information
+         */
         val repoParcelableList = mutableListOf<RepositoryParcelable>()
 
         repositories.forEach { repo ->
@@ -89,10 +95,12 @@ class SearchScreenFragment : Fragment() {
     }
 
     fun onSearch(name : String) {
+        /*when the search button is pressed*/
         viewModel.searchForUser(name)
     }
 
     fun onRefresh() {
+        /*When the user drags to refresh the repository list*/
         val user = viewModel.userInfo.value
         if (user != null) {
             val name = user.name
@@ -103,7 +111,7 @@ class SearchScreenFragment : Fragment() {
     }
 
     fun onItemClicked(repository : Repository) {
-
+        /*when a repository in the repository list is pressed*/
         val userName : String = viewModel.userInfo.value?.name ?: ""
 
         val data = bundleOf(

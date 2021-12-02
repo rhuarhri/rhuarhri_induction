@@ -27,7 +27,6 @@ class ViewCommitScreenRepository @Inject constructor(
                     val updater = CacheUpdater(context)
                     updater.updateCommits(onlineCommits)
                 }
-                //commitCache.update(onlineCommits)
 
                 return onlineCommits
             }
@@ -44,7 +43,6 @@ class ViewCommitScreenRepository @Inject constructor(
                         val updater = CacheUpdater(context)
                         updater.updateCommits(onlineCommits)
                     }
-                    //commitCache.update(onlineCommits)
 
                     onlineCommits
                 }

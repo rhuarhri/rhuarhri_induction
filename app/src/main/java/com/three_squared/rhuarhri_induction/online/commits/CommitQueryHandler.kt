@@ -47,6 +47,11 @@ class CommitQueryHandler constructor(private val retroFit: Retrofit ) {
             commitId = if (onlineCommit != null) {
                 val previousCommitsList = onlineCommit.previous ?: listOf()
 
+                /*
+                Each commit has a reference to the commit that came before it
+                and if the commit dose not contain a reference then it is the first commit
+                in the branch
+                 */
                 if (previousCommitsList.isNotEmpty()) {
                     val previousCommit = previousCommitsList.first()
                     previousCommit.id

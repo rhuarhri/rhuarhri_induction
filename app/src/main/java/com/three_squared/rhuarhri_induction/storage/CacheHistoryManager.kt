@@ -7,6 +7,12 @@ import java.time.LocalDate
 
 class CacheHistoryManager(private val config: RealmConfiguration) {
 
+    /*
+    This checks the age of the cache, as if it is too old it will be filled
+    with rarely used data. If it is too old the reset() will clear the database
+    before resetting the age of the cache
+     */
+
     private val cacheLifeInDays : Long = 2
 
     fun hasExpired() : Boolean {

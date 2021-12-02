@@ -43,28 +43,13 @@ class SearchFragment : Fragment() {
         }
 
         if (!avatarURL.isNullOrBlank()) {
-            /*GlobalScope.launch {
-                println("avatar url is $avatarURL")
-                val bitmap : Bitmap = BitmapFactory.decodeStream(URL(avatarURL).content as InputStream)
-                withContext(Dispatchers.Main) {
-                    binding.foundUserImageIV.setImageBitmap(bitmap)
-                }
-            }*/
 
             Glide.with(binding.root).load(avatarURL).into(binding.foundUserImageIV)
         }
 
         return binding.root
 
-        // Inflate the layout for this fragment
-        //return inflater.inflate(R.layout.fragment_search, container, false)
     }
-
-    /*override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-
-
-    }*/
 
     companion object {
 

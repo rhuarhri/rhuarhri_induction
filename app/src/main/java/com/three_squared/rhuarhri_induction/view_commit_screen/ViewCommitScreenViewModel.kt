@@ -26,6 +26,10 @@ class ViewCommitScreenViewModel @Inject constructor(private val repo : ViewCommi
     }
 
     val refreshingList : MutableLiveData<Boolean> by lazy {
+        /*When the user pulls to refresh the commit list a
+        little process indicator is displayed. This variable
+        is used to hide and display this process indicator.
+         */
         MutableLiveData<Boolean>(true)
     }
 

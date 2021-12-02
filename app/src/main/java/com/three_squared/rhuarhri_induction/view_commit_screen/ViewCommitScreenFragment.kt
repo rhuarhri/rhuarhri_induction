@@ -27,7 +27,7 @@ class ViewCommitScreenFragment : Fragment() {
     ): View {
         binding = ViewCommitScreenFragmentBinding.inflate(inflater, container, false)
 
-        val viewModel: ViewCommitScreenViewModel by viewModels() //ViewModelProvider(this).get(ViewCommitScreenViewModel::class.java)
+        val viewModel: ViewCommitScreenViewModel by viewModels()
 
         binding.viewmodel = viewModel
 
@@ -44,6 +44,13 @@ class ViewCommitScreenFragment : Fragment() {
 
         val commitListObserver = Observer<List<Commit>> { commitList ->
             binding.commitsRV.adapter = CommitListAdapter(commitList) { commit ->
+
+                /*
+                When an item is pressed the user screen will be displayed. The user
+                screen displays information about the committer who created the chosen
+                commit and all the other commits that have made. Since all the information
+                is already available on this screen it is just passed to the user screen.
+                 */
 
                 val commitMessages : MutableList<String> = mutableListOf()
 
@@ -80,8 +87,6 @@ class ViewCommitScreenFragment : Fragment() {
         }
 
         return binding.root
-
-        //return inflater.inflate(R.layout.view_commit_screen_fragment, container, false)
     }
 
 }
