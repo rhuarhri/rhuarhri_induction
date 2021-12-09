@@ -23,6 +23,30 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class SearchScreenFragment : Fragment() {
 
+    /*TODO App Presentation 3 Search Screen
+    In this screen the user will search for a list of repositories based
+    on the name of a user.
+
+    Looking back
+    The Main problem with this screen is that the UI could be simplified.
+    At the moment this screen is split into two chunks one for the chunks being the
+    search bar and the other being the repository list. Both of these chunks
+    have a landscape and portrait variant.
+    Now the landscape and portrait variant of the repository list look
+    the same so one variant could be removed.
+
+    It also has some other problems but they also apply to the other screens.
+    The app does not inform the user that an error has occurred. For example
+    on this screen if the user is searching for a repository at the app fails then
+    the user will just get a blank list.
+
+    The second problem is the app does not have a limit to how much information
+    it can show. For example if the user finds someone who has 1000 repositories
+    the app will display all 1000. This can be a problem as the app would have to
+    use resources to display repositories that the user will not see.
+
+     */
+
     private lateinit var binding: SearchScreenFragmentBinding
     private lateinit var viewModel: SearchScreenViewModel
 

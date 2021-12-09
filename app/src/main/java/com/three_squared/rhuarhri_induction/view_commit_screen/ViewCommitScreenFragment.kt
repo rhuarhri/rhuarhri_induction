@@ -19,6 +19,12 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class ViewCommitScreenFragment : Fragment() {
 
+    /*TODO App Presentation 4 View Commit Screen
+    At this point the user has selected a repository and the app displays
+    information about the repository as well as all the commits made to the
+    repository on this screen.
+     */
+
     private lateinit var binding: ViewCommitScreenFragmentBinding
 
     override fun onCreateView(

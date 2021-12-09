@@ -18,6 +18,13 @@ import com.three_squared.rhuarhri_induction.databinding.UserScreenFragmentBindin
 
 class UserScreenFragment : Fragment() {
 
+    /* TODO App Presentation 5 User Screen
+    This screen displays the contributors information as well as all there commits.
+    Looking back this screen should not exist as a better solution would be
+    to have a list of contributors on the view commit screen and filter the
+    list of commits based on which contributor is selected
+     */
+
     private lateinit var binding: UserScreenFragmentBinding
 
     override fun onCreateView(

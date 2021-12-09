@@ -11,8 +11,18 @@ const val TAG = "cacheUpdater"
 class CacheUpdater(context: Context) {
 
     /*
-    In most cases the app uses coroutines to handle multi-threading but here
-    it is using work manager. The main reason work manager is used is that
+    App Presentation WorkManager
+    This class uses a library called work manager. WorkManager is designed to allow
+    an android app to run long running tasks and offers advantages such as continuing
+    to run even when the app has closed and restarting work when a smartphone is
+    turned off. However the main disadvantage is that you may not know
+    when the task (that work manager is working on will start) will start. For
+    example the app uses work manager to updated the apps database. If the user closes
+    and turns off there smartphone as the database is being updated then this runs the
+    risk of updating the database with out of date information when the smartphone is
+    turned back on.
+
+    The main reason work manager is used in this app is that
     ensures that the work gets completed, even if the app is closed.
      */
 

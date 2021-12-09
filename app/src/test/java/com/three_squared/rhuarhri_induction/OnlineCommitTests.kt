@@ -17,22 +17,14 @@ class OnlineCommitTests {
 
     private lateinit var retrofit: Retrofit
 
-    //private val json = ""
-
-    /*@Before
-    fun setup() {
-
-        server.enqueue(MockResponse().setBody(
-            json
-        ))
-
-        server.start()
-
-        retrofit = Retrofit.Builder()
-            .addConverterFactory(MoshiConverterFactory.create())
-            .baseUrl(server.url("/").toString())
-            .build()
-    }*/
+    //App Presentation Online tests
+    /*
+    The way this test works is that the test uses the MockWebServer()
+    as a replacement for the for the REST API. MockWebServer() only returns
+    the JSON that it has already got this makes these test less useful in this
+    project as most of the time the only thing these test are testing is that
+    how well the app converts JSON into a data class.
+     */
 
     @Test
     fun getCommitWithCompleteJson() = runBlocking {

@@ -5,6 +5,13 @@
     android:id="@+id/nav_graph"
     app:startDestination="@id/searchScreenFragment">
 
+    <!--TODO App Presentation 2 Navigation
+    Because of the single activity architecture all screens are fragments
+    which are displayed on an activity. This file shows these fragments and
+    paths the user can take to navigate between them. This makes
+    navigation easier for developers.
+    -->
+
     <fragment
         android:id="@+id/searchScreenFragment"
         android:name="com.three_squared.rhuarhri_induction.search_screen.SearchScreenFragment"
