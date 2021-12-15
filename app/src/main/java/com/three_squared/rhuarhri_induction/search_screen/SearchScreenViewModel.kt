@@ -22,7 +22,16 @@ class SearchScreenViewModel @Inject constructor(private val searchScreenReposito
         MutableLiveData<List<Repository>>(listOf())
     }
 
+    val errorMessage : MutableLiveData<String> by lazy {
+        MutableLiveData<String>("")
+    }
+
+    val loading : MutableLiveData<Boolean> by lazy {
+        MutableLiveData<Boolean>(false)
+    }
+
     fun searchForUser(userName : String) {
+        loading.value = true
         viewModelScope.launch(Dispatchers.IO) {
             val foundUser = searchScreenRepository.getUserInfo(userName)
 
@@ -30,7 +39,18 @@ class SearchScreenViewModel @Inject constructor(private val searchScreenReposito
                 if (foundUser.id.isNotBlank()) {
                     userInfo.value = foundUser
                     repositoryList.value = foundUser.repositoryList
+
+                    if (foundUser.repositoryList.isEmpty()) {
+                        errorMessage.value = "No repositories found"
+                    } else {
+                        errorMessage.value = ""
+                    }
+                } else {
+                    repositoryList.value = listOf()
+                    errorMessage.value = "No user found"
                 }
+
+                loading.value = false
             }
         }
     }

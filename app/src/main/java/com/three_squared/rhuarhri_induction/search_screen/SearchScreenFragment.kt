@@ -63,28 +63,49 @@ class SearchScreenFragment : Fragment() {
 
         binding.viewmodel = viewModel
 
-        setupSearchFragment("", "")
-        setupRepoList(listOf())
+        setupSearchFragment("", "", false)
+        setupRepoList(listOf(), "")
 
         val userInfoObserver = Observer<User> { user ->
-            setupSearchFragment(user.name, user.avatar)
+            setupSearchFragment(user.name, user.avatar, viewModel.loading.value ?: false)
         }
         viewModel.userInfo.observe(viewLifecycleOwner, userInfoObserver)
 
+        val loadingObserver = Observer<Boolean> { loading ->
+            var name = ""
+            var avatarUrl = ""
+
+            val currentUser = viewModel.userInfo.value
+            if (currentUser != null) {
+                name = currentUser.name
+                avatarUrl = currentUser.avatar
+            }
+
+            setupSearchFragment(name, avatarUrl, loading)
+        }
+
+        viewModel.loading.observe(viewLifecycleOwner, loadingObserver)
+
         val repoListObserver = Observer<List<Repository>> { repoList ->
-            setupRepoList(repoList)
+            setupRepoList(repoList, viewModel.errorMessage.value ?: "")
         }
 
         viewModel.repositoryList.observe(viewLifecycleOwner, repoListObserver)
 
+        val errorMessageObserver = Observer<String> { errorMessage ->
+            setupRepoList(viewModel.repositoryList.value ?: listOf(), errorMessage)
+        }
+
+        viewModel.errorMessage.observe(viewLifecycleOwner, errorMessageObserver)
+
         return binding.root
     }
 
-    private fun setupSearchFragment(name : String, avatarUrl : String) {
+    private fun setupSearchFragment(name : String, avatarUrl : String, loading : Boolean) {
         /*replace the search bar with new search bar instance containing the
         new information
          */
-        val searchFragment = SearchFragment.newInstance(name, avatarUrl)
+        val searchFragment = SearchFragment.newInstance(name, avatarUrl, loading)
 
         val fragmentManger : FragmentManager = this.childFragmentManager
         fragmentManger.beginTransaction().apply {
@@ -93,7 +114,7 @@ class SearchScreenFragment : Fragment() {
         }
     }
 
-    private fun setupRepoList(repositories: List<Repository>) {
+    private fun setupRepoList(repositories: List<Repository>, errorMessage : String) {
         /*replace the repository list with new repository list instance containing the
         new information
          */
@@ -108,7 +129,7 @@ class SearchScreenFragment : Fragment() {
         val parcelableRepoList : ArrayList<RepositoryParcelable> = ArrayList()
         parcelableRepoList.addAll(repoParcelableList)
 
-        val repoListFragment = RepoListFragment.newInstance(parcelableRepoList, "ERROR")
+        val repoListFragment = RepoListFragment.newInstance(parcelableRepoList, errorMessage)
 
         val fragmentManger : FragmentManager = this.childFragmentManager
 

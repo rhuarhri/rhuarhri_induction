@@ -13,6 +13,7 @@ class SearchFragment : Fragment() {
 
     private var name : String? = null
     private var avatarURL : String? = null
+    private var loading : Boolean = false
     private lateinit var binding: FragmentSearchBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -20,6 +21,7 @@ class SearchFragment : Fragment() {
         arguments?.let {
             name = it.getString(nameKey)
             avatarURL = it.getString(avatarURLKey)
+            loading = it.getBoolean(loadingKey)
         }
     }
 
@@ -38,7 +40,14 @@ class SearchFragment : Fragment() {
 
         binding.searchButtonView.setContent {
             val searchButtonWidget = SearchButtonWidget()
-            searchButtonWidget.searchButton(state = SearchButtonState.ENABLED) {
+
+            val buttonState = if (!loading) {
+                SearchButtonState.ENABLED
+            } else {
+                SearchButtonState.LOADING
+            }
+
+            searchButtonWidget.searchButton(state = buttonState) {
                 val name = binding.searchTextInputET.text.toString()
 
                 (parentFragment as SearchScreenFragment?)?.onSearch(name)
@@ -64,13 +73,15 @@ class SearchFragment : Fragment() {
 
         const val nameKey = "name"
         const val avatarURLKey = "avatar"
+        const val loadingKey = "loading"
 
         @JvmStatic
-        fun newInstance(name: String, avatarURL : String) =
+        fun newInstance(name: String, avatarURL : String, loading : Boolean) =
             SearchFragment().apply {
                 arguments = Bundle().apply {
                     putString(nameKey, name)
                     putString(avatarURLKey, avatarURL)
+                    putBoolean(loadingKey, loading)
                 }
             }
     }
