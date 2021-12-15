@@ -30,10 +30,19 @@ class SearchFragment : Fragment() {
 
         binding = FragmentSearchBinding.inflate(inflater, container, false)
 
-        binding.searchBTN.setOnClickListener {
+        /*binding.searchBTN.setOnClickListener {
             val name = binding.searchTextInputET.text.toString()
 
             (parentFragment as SearchScreenFragment?)?.onSearch(name)
+        }*/
+
+        binding.searchButtonView.setContent {
+            val searchButtonWidget = SearchButtonWidget()
+            searchButtonWidget.searchButton(state = SearchButtonState.ENABLED) {
+                val name = binding.searchTextInputET.text.toString()
+
+                (parentFragment as SearchScreenFragment?)?.onSearch(name)
+            }
         }
 
         binding.name = if (name == null) {
