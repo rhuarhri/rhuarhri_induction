@@ -15,11 +15,13 @@ class RepoListFragment : Fragment() {
 
     private lateinit var binding: FragmentRepoListBinding
     private var repoList : ArrayList<RepositoryParcelable>? = null
+    private var errorMessage = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
             repoList = it.getParcelableArrayList(searchResultKey)
+            errorMessage = it.getString(errorMessageKey, "")
         }
     }
 
@@ -29,6 +31,12 @@ class RepoListFragment : Fragment() {
     ): View {
 
         binding = FragmentRepoListBinding.inflate(inflater, container, false)
+
+        //setup error message
+        binding.errorMessageView.setContent {
+            val errorMessageWidget = ErrorMessageWidget()
+            errorMessageWidget.errorMessage(message = errorMessage)
+        }
 
         //recycler view set up
         binding.searchResultRV.setHasFixedSize(true)
@@ -58,12 +66,14 @@ class RepoListFragment : Fragment() {
 
     companion object {
         const val searchResultKey : String = "Result"
+        const val errorMessageKey : String = "Error"
 
         @JvmStatic
-        fun newInstance(repoList : ArrayList<RepositoryParcelable>) =
+        fun newInstance(repoList : ArrayList<RepositoryParcelable>, errorMessage : String) =
             RepoListFragment().apply {
                 arguments = Bundle().apply {
                     putParcelableArrayList(searchResultKey, repoList)
+                    putString(errorMessageKey, errorMessage)
                 }
             }
     }

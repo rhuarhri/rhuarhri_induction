@@ -108,7 +108,7 @@ class SearchScreenFragment : Fragment() {
         val parcelableRepoList : ArrayList<RepositoryParcelable> = ArrayList()
         parcelableRepoList.addAll(repoParcelableList)
 
-        val repoListFragment = RepoListFragment.newInstance(parcelableRepoList)
+        val repoListFragment = RepoListFragment.newInstance(parcelableRepoList, "ERROR")
 
         val fragmentManger : FragmentManager = this.childFragmentManager
 
