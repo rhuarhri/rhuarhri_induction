@@ -10,6 +10,7 @@ import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
+import com.three_squared.rhuarhri_induction.MainActivity
 import com.three_squared.rhuarhri_induction.R
 import com.three_squared.rhuarhri_induction.data.Repository
 import com.three_squared.rhuarhri_induction.data.User
@@ -66,16 +67,18 @@ class SearchScreenFragment : Fragment() {
         setupSearchFragment("", "", false)
         setupRepoList(listOf(), "")
 
+        val mainViewModel = (activity as MainActivity).mainActivityViewModel
+
         val userInfoObserver = Observer<User> { user ->
             setupSearchFragment(user.name, user.avatar, viewModel.loading.value ?: false)
         }
-        viewModel.userInfo.observe(viewLifecycleOwner, userInfoObserver)
+        mainViewModel.userInfo.observe(viewLifecycleOwner, userInfoObserver)
 
         val loadingObserver = Observer<Boolean> { loading ->
             var name = ""
             var avatarUrl = ""
 
-            val currentUser = viewModel.userInfo.value
+            val currentUser = mainViewModel.userInfo.value
             if (currentUser != null) {
                 name = currentUser.name
                 avatarUrl = currentUser.avatar
@@ -87,16 +90,16 @@ class SearchScreenFragment : Fragment() {
         viewModel.loading.observe(viewLifecycleOwner, loadingObserver)
 
         val repoListObserver = Observer<List<Repository>> { repoList ->
-            setupRepoList(repoList, viewModel.errorMessage.value ?: "")
+            setupRepoList(repoList, mainViewModel.errorMessage.value ?: "")
         }
 
-        viewModel.repositoryList.observe(viewLifecycleOwner, repoListObserver)
+        mainViewModel.repositoryList.observe(viewLifecycleOwner, repoListObserver)
 
         val errorMessageObserver = Observer<String> { errorMessage ->
-            setupRepoList(viewModel.repositoryList.value ?: listOf(), errorMessage)
+            setupRepoList(mainViewModel.repositoryList.value ?: listOf(), errorMessage)
         }
 
-        viewModel.errorMessage.observe(viewLifecycleOwner, errorMessageObserver)
+        mainViewModel.errorMessage.observe(viewLifecycleOwner, errorMessageObserver)
 
         return binding.root
     }
@@ -141,23 +144,29 @@ class SearchScreenFragment : Fragment() {
 
     fun onSearch(name : String) {
         /*when the search button is pressed*/
-        viewModel.searchForUser(name)
+        viewModel.searchForUser(name) {
+            val mainViewModel = (activity as MainActivity).mainActivityViewModel
+            mainViewModel.setUserInfo(it)
+        }
     }
 
     fun onRefresh() {
         /*When the user drags to refresh the repository list*/
-        val user = viewModel.userInfo.value
+        val user = (activity as MainActivity).mainActivityViewModel.userInfo.value
         if (user != null) {
             val name = user.name
             if (name.isNotBlank()) {
-                viewModel.searchForUser(name)
+                viewModel.searchForUser(name) {
+                    val mainViewModel = (activity as MainActivity).mainActivityViewModel
+                    mainViewModel.setUserInfo(it)
+                }
             }
         }
     }
 
     fun onItemClicked(repository : Repository) {
         /*when a repository in the repository list is pressed*/
-        val userName : String = viewModel.userInfo.value?.name ?: ""
+        val userName : String = (activity as MainActivity).mainActivityViewModel.userInfo.value?.name ?: ""
 
         val data = bundleOf(
             "ownerName" to userName,

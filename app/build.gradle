@@ -10,6 +10,9 @@ plugins {
 android {
     compileSdk 31
 
+    Properties properties = new Properties()
+    properties.load(project.rootProject.file("local.properties").newDataInputStream())
+
     defaultConfig {
         applicationId "com.three_squared.rhuarhri_induction"
         minSdk 26
@@ -18,6 +21,8 @@ android {
         versionName "1.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+
+        buildConfigField("String", "GITHUB_API_KEY", "\"${Base64.encoder.encodeToString(properties.getProperty("githubToken", "").bytes)}\"")
     }
 
     buildTypes {

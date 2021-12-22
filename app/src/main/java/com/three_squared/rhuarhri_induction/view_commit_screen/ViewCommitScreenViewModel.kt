@@ -21,10 +21,6 @@ class ViewCommitScreenViewModel @Inject constructor(private val repo : ViewCommi
         )
     }
 
-    val commitList : MutableLiveData<List<Commit>> by lazy {
-        MutableLiveData<List<Commit>>(listOf())
-    }
-
     val refreshingList : MutableLiveData<Boolean> by lazy {
         /*When the user pulls to refresh the commit list a
         little process indicator is displayed. This variable
@@ -38,8 +34,9 @@ class ViewCommitScreenViewModel @Inject constructor(private val repo : ViewCommi
         return repositoryOwnerName
     }
 
-    fun setup(bundle: Bundle?) {
-        if (bundle != null) {
+    fun setup(bundle: Bundle?, updateCommitList : (commitList : List<Commit>) -> Unit) {
+        val currentRepository = repository.value ?: Repository("", "", "", "")
+        if (bundle != null && currentRepository.id.isBlank()) {
             repositoryOwnerName = bundle.getString("ownerName") ?: ""
             val id = bundle.getString("id") ?: ""
             val name = bundle.getString("name") ?: ""
@@ -47,24 +44,23 @@ class ViewCommitScreenViewModel @Inject constructor(private val repo : ViewCommi
             val description = bundle.getString("description") ?: ""
 
             repository.value = Repository(id, name, visibility, description)
+
+            getCommits(repositoryOwnerName, name, updateCommitList)
         }
     }
 
-    private fun getCommits(userName : String, repositoryName : String) {
-        if (commitList.value.isNullOrEmpty()) {
-            viewModelScope.launch(Dispatchers.IO) {
-                val foundCommitList = repo.getCommits(userName, repositoryName)
-                withContext(Dispatchers.Main) {
-                    commitList.value = foundCommitList
-                    refreshingList.value = false
-                }
+    private fun getCommits(userName : String, repositoryName : String, updateCommitList : (commitList : List<Commit>) -> Unit) {
+        viewModelScope.launch(Dispatchers.IO) {
+            val foundCommitList = repo.getCommits(userName, repositoryName)
+            withContext(Dispatchers.Main) {
+                updateCommitList.invoke(foundCommitList)
+                refreshingList.value = false
             }
         }
     }
 
-    fun refreshCommits(userName: String, repositoryName : String) {
+    fun refreshCommits(userName: String, repositoryName : String, updateCommitList: (commitList: List<Commit>) -> Unit) {
         refreshingList.value = true
-        commitList.value = listOf()
-        getCommits(userName, repositoryName)
+        getCommits(userName, repositoryName, updateCommitList)
     }
 }

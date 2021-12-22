@@ -14,43 +14,21 @@ import javax.inject.Inject
 @HiltViewModel
 class SearchScreenViewModel @Inject constructor(private val searchScreenRepository: SearchScreenRepository): ViewModel() {
 
-    val userInfo : MutableLiveData<User> by lazy {
-        MutableLiveData<User>(User("", "", "", "", listOf()))
-    }
+    val loading : MutableLiveData<Boolean> = MutableLiveData<Boolean>(false)
 
-    val repositoryList : MutableLiveData<List<Repository>> by lazy {
-        MutableLiveData<List<Repository>>(listOf())
-    }
+    fun searchForUser(userName : String, updateUser :  (user : User) -> Unit) {
+        if (userName.isBlank()) {
+            updateUser.invoke(User("", "", "", "", listOf()))
+        } else {
+            loading.value = true
+            viewModelScope.launch(Dispatchers.IO) {
+                val foundUser = searchScreenRepository.getUserInfo(userName)
 
-    val errorMessage : MutableLiveData<String> by lazy {
-        MutableLiveData<String>("")
-    }
+                withContext(Dispatchers.Main) {
+                    updateUser.invoke(foundUser)
 
-    val loading : MutableLiveData<Boolean> by lazy {
-        MutableLiveData<Boolean>(false)
-    }
-
-    fun searchForUser(userName : String) {
-        loading.value = true
-        viewModelScope.launch(Dispatchers.IO) {
-            val foundUser = searchScreenRepository.getUserInfo(userName)
-
-            withContext(Dispatchers.Main) {
-                if (foundUser.id.isNotBlank()) {
-                    userInfo.value = foundUser
-                    repositoryList.value = foundUser.repositoryList
-
-                    if (foundUser.repositoryList.isEmpty()) {
-                        errorMessage.value = "No repositories found"
-                    } else {
-                        errorMessage.value = ""
-                    }
-                } else {
-                    repositoryList.value = listOf()
-                    errorMessage.value = "No user found"
+                    loading.value = false
                 }
-
-                loading.value = false
             }
         }
     }

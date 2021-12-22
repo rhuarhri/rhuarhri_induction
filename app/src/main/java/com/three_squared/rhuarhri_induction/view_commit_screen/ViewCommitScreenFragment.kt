@@ -10,6 +10,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.three_squared.rhuarhri_induction.MainActivity
 import com.three_squared.rhuarhri_induction.R
 import com.three_squared.rhuarhri_induction.data.Commit
 import com.three_squared.rhuarhri_induction.data.Repository
@@ -37,7 +38,9 @@ class ViewCommitScreenFragment : Fragment() {
 
         binding.viewmodel = viewModel
 
-        viewModel.setup(arguments)
+        viewModel.setup(arguments) {
+            (activity as MainActivity).mainActivityViewModel.setCommitList(it)
+        }
 
         val repositoryObserver = Observer<Repository> {
             binding.descriptionTXT.text = it.description
@@ -48,6 +51,7 @@ class ViewCommitScreenFragment : Fragment() {
 
         binding.commitsRV.setHasFixedSize(true)
 
+        val mainViewModel = (activity as MainActivity).mainActivityViewModel
         val commitListObserver = Observer<List<Commit>> { commitList ->
             binding.commitsRV.adapter = CommitListAdapter(commitList) { commit ->
 
@@ -76,11 +80,9 @@ class ViewCommitScreenFragment : Fragment() {
             }
         }
 
-        viewModel.commitList.observe(viewLifecycleOwner, commitListObserver)
+        mainViewModel.commitList.observe(viewLifecycleOwner, commitListObserver)
 
         binding.commitsRV.layoutManager = LinearLayoutManager(this.context)
-
-        viewModel.refreshCommits(viewModel.getRepositoryOwnerName(), viewModel.repository.value?.name ?: "")
 
         val refreshingListObserver = Observer<Boolean> { refreshing ->
             binding.commitListSRL.isRefreshing = refreshing
@@ -89,7 +91,9 @@ class ViewCommitScreenFragment : Fragment() {
         viewModel.refreshingList.observe(viewLifecycleOwner, refreshingListObserver)
 
         binding.commitListSRL.setOnRefreshListener {
-            viewModel.refreshCommits(viewModel.getRepositoryOwnerName(), viewModel.repository.value?.name ?: "")
+            viewModel.refreshCommits(viewModel.getRepositoryOwnerName(), viewModel.repository.value?.name ?: "") {
+                (activity as MainActivity).mainActivityViewModel.setCommitList(it)
+            }
         }
 
         return binding.root
