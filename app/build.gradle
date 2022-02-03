@@ -28,12 +28,6 @@ android {
         plain text api key. However they could easily decode the api key.
          */
         buildConfigField("String", "GITHUB_API_KEY", "\"${Base64.encoder.encodeToString(properties.getProperty("githubToken", "").bytes)}\"")
-
-        def propFile = rootProject.file("./local.properties")
-        def apiProperties = new Properties()
-        apiProperties.load(new FileInputStream(propFile))
-
-        buildConfigField("String", "API_KEY", properties['API_KEY'])
     }
 
     buildTypes {
