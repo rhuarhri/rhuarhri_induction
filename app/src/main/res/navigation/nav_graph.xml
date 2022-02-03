@@ -5,7 +5,7 @@
     android:id="@+id/nav_graph"
     app:startDestination="@id/searchScreenFragment">
 
-    <!--TODO App Presentation 2 Navigation
+    <!--TODO App Presentation slide 6
     Because of the single activity architecture all screens are fragments
     which are displayed on an activity. This file shows these fragments and
     paths the user can take to navigate between them. This makes

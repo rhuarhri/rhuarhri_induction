@@ -10,7 +10,7 @@ import javax.inject.Inject
 
 class QueryHandler @Inject constructor(private val retroFit : Retrofit) {
 
-    /* TODO App Presentation Online
+    /* TODO App Presentation slide 3
     querying the REST API is done by three classes which handle
     querying for users, commits and repositories separately and are brought
     together in this class. This is done as it keeps querying by type separate

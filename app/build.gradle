@@ -22,7 +22,18 @@ android {
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
+        /*
+        The api token is encoded in base 64 as it scrabbles the api key. This is
+        important as if someone looks through the apk file they won't be able to see the
+        plain text api key. However they could easily decode the api key.
+         */
         buildConfigField("String", "GITHUB_API_KEY", "\"${Base64.encoder.encodeToString(properties.getProperty("githubToken", "").bytes)}\"")
+
+        def propFile = rootProject.file("./local.properties")
+        def apiProperties = new Properties()
+        apiProperties.load(new FileInputStream(propFile))
+
+        buildConfigField("String", "API_KEY", properties['API_KEY'])
     }
 
     buildTypes {

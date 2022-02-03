@@ -17,6 +17,7 @@ import androidx.compose.ui.unit.dp
 
 class SearchButtonWidget {
 
+    //TODO App Presentation slide 7
     @Composable
     fun searchButton(state : SearchButtonState, onClick : () -> Unit) {
 

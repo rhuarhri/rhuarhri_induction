@@ -3,15 +3,12 @@ package com.three_squared.rhuarhri_induction
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.activity.viewModels
-import androidx.fragment.app.viewModels
-import com.three_squared.rhuarhri_induction.databinding.ViewCommitScreenFragmentBinding
-import com.three_squared.rhuarhri_induction.search_screen.SearchScreenViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import io.realm.Realm
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
-    /*TODO App Presentation 1 Main activity
+    /*TODO App Presentation slide 5
     You can consider an activity as a screen displayed by the app.
     But this activity is empty. This is because of the single activity
     architecture.

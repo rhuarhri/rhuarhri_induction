@@ -18,7 +18,7 @@ import retrofit2.converter.moshi.MoshiConverterFactory
 import javax.inject.Singleton
 
 /*
- App Presentation dependency injection
+ TODO App Presentation slide 4
 This file is uses a library called Hilt. What hilt does
 is generates the code needed to implement dependency injection within
 an app.

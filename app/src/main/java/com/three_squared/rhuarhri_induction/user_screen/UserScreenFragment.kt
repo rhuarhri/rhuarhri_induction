@@ -18,7 +18,7 @@ import com.three_squared.rhuarhri_induction.databinding.UserScreenFragmentBindin
 
 class UserScreenFragment : Fragment() {
 
-    /* TODO App Presentation 5 User Screen
+    /* TODO App Presentation slide 10
     This screen displays the contributors information as well as all there commits.
     Looking back this screen should not exist as a better solution would be
     to have a list of contributors on the view commit screen and filter the

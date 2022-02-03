@@ -35,7 +35,7 @@ class ExampleInstrumentedTest {
 
 }
 
-//App Presentation Database Tests
+//TODO App Presentation Slide 11
 /*
 These are the tests related to the apps database and realm. Unlike other
 tests these test have to run on a real device or on an emulator. This is because

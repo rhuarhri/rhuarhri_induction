@@ -16,7 +16,18 @@ import io.realm.RealmList
 import io.realm.kotlin.executeTransactionAwait
 import javax.inject.Inject
 
-class UserCache @Inject constructor(private val realmConfig : RealmConfiguration) /*: CacheParent<User>(realmConfig)*/ {
+class UserCache @Inject constructor(private val realmConfig : RealmConfiguration) {
+
+    //TODO App Presentation slide 2
+    /**
+     * Development problem
+     * Most of the time the app uses coroutines to handle multiple threading
+     * However this caused a problem when the app had to update the cache.
+     * Because when an app is closed all the coroutines are cancelled even
+     * when they are doing something like updating the cache.
+     * To resolve this I have used a library called work manager that
+     * is designed to handle the task of updating the cache.
+     */
 
     fun add(user: User) {
 

@@ -20,6 +20,7 @@ import androidx.compose.ui.unit.dp
 
 class ErrorMessageWidget {
 
+    //TODO App Presentation slide 7
     @Composable
     fun errorMessage(message : String) {
 
