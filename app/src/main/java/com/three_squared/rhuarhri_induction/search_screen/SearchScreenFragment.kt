@@ -10,6 +10,8 @@ import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
+import com.google.android.material.snackbar.Snackbar
+import com.three_squared.rhuarhri_induction.BuildConfig
 import com.three_squared.rhuarhri_induction.MainActivity
 import com.three_squared.rhuarhri_induction.R
 import com.three_squared.rhuarhri_induction.data.Repository
@@ -126,6 +128,11 @@ class SearchScreenFragment : Fragment() {
 
     fun onSearch(name : String) {
         /*when the search button is pressed*/
+
+        val bitriseValue = BuildConfig.Bitrise_Env
+
+        Snackbar.make(binding.root, "received value from bitrise was ($bitriseValue)", Snackbar.LENGTH_LONG).show()
+
         viewModel.searchForUser(name) {
             val mainViewModel = (activity as MainActivity).mainActivityViewModel
             mainViewModel.setUserInfo(it)

@@ -13,6 +13,8 @@ android {
     Properties properties = new Properties()
     properties.load(project.rootProject.file("local.properties").newDataInputStream())
 
+    //String testEnv = new String(System.getenv("TEST_ENV") as String ? "failed to get test env")
+
     defaultConfig {
         applicationId "com.three_squared.rhuarhri_induction"
         minSdk 26
@@ -28,6 +30,8 @@ android {
         plain text api key. However they could easily decode the api key.
          */
         buildConfigField("String", "GITHUB_API_KEY", "\"${Base64.encoder.encodeToString(properties.getProperty("githubToken", "").bytes)}\"")
+
+        buildConfigField("String", "Bitrise_Env", "\"${System.getenv("TEST_ENV") as String}\"")
     }
 
     buildTypes {
