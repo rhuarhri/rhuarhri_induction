@@ -10,8 +10,8 @@ plugins {
 android {
     compileSdk 31
 
-    Properties properties = new Properties()
-    properties.load(project.rootProject.file("local.properties").newDataInputStream())
+    //Properties properties = new Properties()
+    //properties.load(project.rootProject.file("local.properties").newDataInputStream())
 
     //String testEnv = new String(System.getenv("TEST_ENV") as String ? "failed to get test env")
 
@@ -29,7 +29,7 @@ android {
         important as if someone looks through the apk file they won't be able to see the
         plain text api key. However they could easily decode the api key.
          */
-        buildConfigField("String", "GITHUB_API_KEY", "\"${Base64.encoder.encodeToString(properties.getProperty("githubToken", "").bytes)}\"")
+        //buildConfigField("String", "GITHUB_API_KEY", "\"${Base64.encoder.encodeToString(properties.getProperty("githubToken", "").bytes)}\"")
 
         buildConfigField("String", "Bitrise_Env", "\"${System.getenv("TEST_ENV") as String}\"")
     }
