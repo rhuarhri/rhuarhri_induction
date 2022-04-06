@@ -77,6 +77,9 @@ class SearchScreenFragment : Fragment() {
             setupRepoList(repoList, mainViewModel.errorMessage.value ?: "")
         }
 
+
+
+
         mainViewModel.repositoryList.observe(viewLifecycleOwner, repoListObserver)
 
         val errorMessageObserver = Observer<String> { errorMessage ->
